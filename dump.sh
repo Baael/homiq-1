@@ -9,8 +9,8 @@ rm -f homiq-promienko.sql.gz
 gzip homiq-promienko.sql
 vacuumdb -f -d homiq-promienko >/dev/null
 #svn -q -m "baza danych" ci homiq-promienko.sql.gz
-git commit -m "baza danych" homiq-promienko.sql.gz
-git push
+git commit -m "baza danych" homiq-promienko.sql.gz >/dev/null 2>/dev/null
+git push >/dev/null 2>/dev/null
 
 if [ "`id -u`" = "0" ]
 then
