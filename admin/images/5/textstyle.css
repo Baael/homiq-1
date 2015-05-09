@@ -1,0 +1,30 @@
+/*
+*			{font-family: Tahoma; font-size: 12px;}
+*/
+
+a      		{color: #006600; text-decoration:underline;}
+a:hover     {color: #003300; text-decoration:underline;}
+a:active    {color: #666666;	}
+a:visited   {color: #666666;	}
+.bd0 a:visited,
+.bd0 a	{color:#E1E6E2 ;}
+    
+blockquote  {	}
+ol          {margin-top: 5px; margin-bottom:5px;	}
+ul          {margin-top: 5px; margin-bottom:5px;	}
+p           {font-size: 11px; margin: 0 0 15px 0; color: #666666;  line-height:15px;/*line-height: 1.25em;*/display:block;}
+li          {font-size: 11px;margin: 0 0 5px 0; color: #666666; line-height: 1.25em; }
+
+body		{font-family: Verdana; font-size: 11px;}
+td			{font-family: Verdana; font-size: 11px;}
+
+h1		{font-size: 1em; margin: 0 0 15px 0; color: #000;}
+h2		{font-size: 1em; margin: 0 0 10px 0;	color: #000;}
+h3		{font-size: 1em; margin: 0 0 5px 0;	color: #000; font-weight: normal;}
+h4		{font-size: 1em;font-weight: normal;color: #666;}
+h5		{font-size: 1em;font-weight: normal;color: #666;}
+h6	 	{font-size: 1em;font-weight: normal;color: #666;}
+
+.menu	{padding: 0;}
+.black {color:#000000;}
+.white {color:#FFF}

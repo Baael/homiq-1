@@ -1,0 +1,79 @@
+*			{font-family: Verdana; font-size: 11px;}
+a      		{	text-decoration: underline;	}
+a:active    {	color: #666666;	}
+a:hover     {	color: #666666;	}
+    
+blockquote  {	}
+ol          {	}
+ul          {	}
+p           {	color: #000000;}
+
+body        {background-color:#DFDFDF; margin: 0; padding: 0;}
+td			{	}
+
+h1		{margin:0;}
+h2		{margin:0;}
+h3		{margin:0;}
+h4		{}
+/*date*/
+h5		{}
+/*more*/
+h6		{}
+form,input,div,p {margin:0;padding:0;}
+form	{display:inline;}
+img		{border:0 none;}
+.menu	{padding: 0;}
+.clean {clear:both;}
+.naglowek {padding: 10px 10px 1px 10px;}
+.button_zaplac {font-weight:bold; width: 165px; height:20px; background-color:#6699FF; border: 1px solid #3366CC; color:#ffffff; cursor:pointer;  }
+
+.standardowy { font-size: auto;}
+
+.rozmod_niebieski { width: 641px; margin: 2px 0 0 53px; } 
+.rozmod_bialy { width: 641px; margin: 2px 0 0 53px; }
+
+.headlink			{float:left; padding-left:15px;}
+
+.headSearch			{color:#fff; float:left; width:205px; padding-left:5px; margin:0px;}
+
+.headaktualnosci	{color:#fff; float:left; width:130px; text-align: left; padding-left: 15px; line-height:23px; background-position: 0 7px;  background-repeat: no-repeat; }
+.headaktualnosci_nopad	{color:#fff; float:right; width:130px; text-align: right;position: absolute; top: 0; right: 0; }
+
+.szara_siatka			{padding:0;} 
+.szara_siatka_wyszukiwarka		{margin:0px 0px 0px 8px; padding:0; width:726px; background-repeat: repeat; background-position: top left;}
+.biuro_podrozy	{width:725px; margin:10px 0px 10px 11px; }
+
+.foot_napis			{width: 988px; background-color: #649AFC; vertical-align: middle;  margin: 6px;}
+
+.foot_flagi1		{width: 988px; background-color: #DFDFDF; vertical-align: middle;  margin: 6px; background-repeat: no-repeat; background-position: top right;}
+
+.foot_agents {width: 988px; background-color: #DFDFDF; vertical-align: middle;  margin: 6px; background-repeat: no-repeat; background-position: top right;}
+
+.foot_menu_stopka	{ }
+
+.regiony_wyniki {margin: 0 0 0 8px;}
+
+.hotele_wyniki		{margin: 0 0 0 8px; width:720px;}
+
+.terminy_wyniki		{margin: 0 0 0 8px; width:720px;}
+
+.potw_wyniki		{margin: 0 0 0 8px; width:725px; }
+
+
+	
+
+.footer_copyright { text-align: right;}
+
+.maindiv { padding: 0 50px 10px 60px; color: #001e50;}
+
+.submenu_maindiv { margin: 15px 5px 20px 10px;}
+
+.ofertadnia { width: 694px; background-color: #b2ccff; background-position: 300px 0; background-repeat: repeat-y; margin: 0 0 0 0;}
+  
+.tuisp_nosub { }
+  
+.googlemap {margin:0}
+
+.wyszukiwarka { font-size: 12px; display: none;}
+
+.search_adv { margin: 0;}

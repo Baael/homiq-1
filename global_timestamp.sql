@@ -1,0 +1,1 @@
+UPDATE global SET g_timestamp=CURRENT_TIMESTAMP

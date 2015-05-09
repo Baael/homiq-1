@@ -1,0 +1,15 @@
+<style>
+
+table.sql_table         { width: 100%; margin-left:10px;}
+table.sql_table thead,
+table.sql_table th      {background-color: #A0A0A0;}
+table.sql_table thead td,
+table.sql_table th      {color: #fff; padding: 2px; font-size: 12px;}
+table.sql_table td      {font-size: 11px; padding-top:3px;padding-bottom:3px;}
+table.sql_table a       {font-size: 11px;}
+table.sql_table col     {}
+table.sql_table .even   {background-color: #f0f0f0;}
+table.sql_table .odd    {background-color: #ffff;}
+a.naviactive {border: solid 1px red;}
+
+</style>

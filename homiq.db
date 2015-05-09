@@ -1,0 +1,414 @@
+DROP TABLE masters;
+
+CREATE TABLE masters
+(
+	m_id serial,
+	m_name text,
+	m_cid char(4) unique,
+	m_ip char(15),
+	m_port int2,
+	m_active int2 default 1
+);
+
+INSERT INTO masters (m_name,m_cid,m_ip,m_port) VALUES ('Parter','PA','10.10.20.201',4001);
+
+DROP TABLE modules;
+CREATE TABLE modules
+(
+	m_id serial,
+	m_name text,
+	m_master char(4),
+	m_serial char(10),
+	m_adr char(2),
+	m_type char(1) default 'R',
+	m_active int2 default 1,
+	m_state char(1) default 'u',
+	m_sleep int2,
+	m_group char(32),
+	m_symbol char(10)
+);
+
+DROP TABLE inputs;
+
+CREATE TABLE inputs
+(
+	i_id serial,
+	i_name text,
+	i_master char(4),
+	i_module char(2),
+	i_state char(1),
+	i_adr char(2),
+	i_active int2 default 1,
+	i_type int2 default 1
+);
+
+CREATE UNIQUE INDEX inputs_unique_key ON inputs(i_master,i_module,i_adr);
+
+DROP TABLE outputs;
+CREATE TABLE outputs
+(
+	o_id serial,
+	o_name text,
+	o_master char(4),
+	o_module char(2),
+	o_adr int2,
+	o_active int2 default 1,
+	o_group char(32),
+	o_type char(2),
+	o_sleep int2,
+	o_state char(1) default '0'
+);
+
+
+
+
+
+DROP TABLE send;
+CREATE TABLE send
+(
+	s_id serial,
+	s_time int,
+	s_sent int default 0,
+	s_master char(4),
+	s_cmd char(5),
+	s_val char(32),
+	s_src char(16),
+	s_dst char(16),
+	s_pkt int2,
+	s_top char(1),
+	s_zero int2 default 0,
+	s_queue int,
+	s_sql text,
+	s_retry int2 default 0
+);
+CREATE INDEX send_key ON send (s_id,s_sent,s_time,s_queue);
+CREATE INDEX send_key2 ON send(s_sent,s_top);
+CREATE INDEX send_key3 ON send(s_master,s_top,s_queue);
+
+
+DROP TABLE action;
+CREATE TABLE action
+(
+	a_id serial,
+	a_name text,
+	a_active int2 default 1,
+	a_input_master char(4),
+	a_input_module char(2),
+	a_input_adr int,
+	a_input_state char(1) default '',
+	a_input_module_state char(1) default '',
+	a_pri int2,
+	a_sleep int2 default 0,
+	a_output_master char(4),
+	a_output_module char(2),
+	a_output_adr char(2),
+	a_output_val char(1), 
+	a_output_state char(1) default '',
+	a_macro char(10),
+	a_macro_param text
+);
+
+
+DROP TABLE macro;
+CREATE TABLE macro
+(
+	m_id serial,
+	m_name text,
+	m_symbol char(10) unique,
+	m_master char(4),
+	m_module char(2),
+	m_adr char(2),
+	m_state_cond char(1),
+	m_sleep int2,
+	m_val char(1),
+	m_state char(1),
+	m_group char(32),
+	m_cmd char(5),
+	m_sql text,
+	m_sh text,
+	m_active int2 default 1
+);
+
+DROP TABLE macromacro;
+CREATE TABLE macromacro
+(
+	mm_id serial,
+	mm_parent char(10),
+	mm_child char(10),
+	mm_pri int2,
+	mm_params text
+);
+
+
+CREATE TABLE macro_future
+(
+	mf_id serial,
+	mf_symbol char(10),
+	mf_time integer default 0,
+	mf_params text
+);
+
+
+DROP TABLE temp;
+CREATE TABLE temp
+(
+	t_id serial,
+	t_master char(4),
+	t_module char(2),
+	t_time int4 DEFAULT  EXTRACT(EPOCH FROM CURRENT_TIMESTAMP),
+	t_temp double precision,
+	t_temp_avg double precision
+);
+
+
+DROP TABLE cron;
+CREATE TABLE cron (
+	c_id serial,
+	c_min text,
+	c_hour text,
+	c_day text,
+	c_month text,
+	c_dow text,
+	c_macro_id int,
+	c_symbol char(10),
+	c_active int2 default 1
+);
+
+
+
+DROP TABLE global;
+CREATE TABLE global (
+	g_day int2,
+	g_daylight int2,
+	g_vacation int2,
+	g_t1 double precision
+);
+
+
+
+DROP VIEW dom;
+CREATE VIEW dom (m_id,m_name,m_type,m_state,m_group)
+AS
+SELECT m_id,m_name,'R',m_state,m_group FROM modules WHERE m_type='R' AND m_active=1 AND m_group<>''
+UNION
+SELECT o_id,o_name,o_type,o_state,o_group FROM outputs WHERE o_active=1 AND o_group<>''
+UNION
+SELECT m_id,m_name,'M','',m_group FROM macro WHERE m_group<>'';
+
+
+
+
+CREATE OR REPLACE FUNCTION macro_change() RETURNS "trigger"
+AS $$
+BEGIN
+IF NEW.m_symbol <> OLD.m_symbol THEN
+UPDATE macromacro SET mm_parent=NEW.m_symbol WHERE mm_parent=OLD.m_symbol AND mm_parent<>'';
+UPDATE macromacro SET mm_child=NEW.m_symbol WHERE mm_child=OLD.m_symbol AND mm_child<>'';
+UPDATE action SET a_macro=NEW.m_symbol WHERE a_macro=OLD.m_symbol AND a_macro<>'';
+END IF;
+RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+
+
+CREATE TRIGGER macro_change
+BEFORE UPDATE ON macro
+FOR EACH ROW
+EXECUTE PROCEDURE macro_change();
+
+CREATE OR REPLACE FUNCTION outputs_change() RETURNS "trigger"
+AS $$
+BEGIN
+IF NEW.o_adr <> OLD.o_adr THEN
+UPDATE action SET a_output_master=NEW.o_master,a_output_module=NEW.o_module,a_output_adr=NEW.o_adr 
+WHERE a_output_master=OLD.o_master AND a_output_module=OLD.o_module AND a_output_adr=OLD.o_adr;
+UPDATE macro SET m_master=NEW.o_master,m_module=NEW.o_module,m_adr=NEW.o_adr 
+WHERE m_master=OLD.o_master AND m_module=OLD.o_module AND m_adr=OLD.o_adr;
+END IF;
+NEW.o_lastchange=round(EXTRACT(EPOCH FROM CURRENT_TIMESTAMP));
+
+IF NEW.o_history=1 AND NEW.o_state<>OLD.o_state THEN
+INSERT INTO history (h_desc,h_state) VALUES (NEW.o_name, NEW.o_state);
+END IF;
+
+RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER outputs_change
+BEFORE UPDATE ON outputs
+FOR EACH ROW
+EXECUTE PROCEDURE outputs_change();
+
+CREATE OR REPLACE FUNCTION inputs_change() RETURNS "trigger"
+AS $$
+BEGIN
+IF NEW.i_history=1 AND NEW.i_state<>OLD.i_state THEN
+INSERT INTO history (h_desc,h_state) VALUES (NEW.i_name, NEW.i_state);
+END IF;
+RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER inputs_change
+BEFORE UPDATE ON inputs
+FOR EACH ROW
+EXECUTE PROCEDURE inputs_change();
+
+CREATE OR REPLACE FUNCTION modules_change() RETURNS "trigger"
+AS $$
+BEGIN
+NEW.m_lastchange=round(EXTRACT(EPOCH FROM CURRENT_TIMESTAMP));
+RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+CREATE TRIGGER modules_change
+BEFORE UPDATE ON modules
+FOR EACH ROW
+EXECUTE PROCEDURE modules_change();
+
+
+
+
+
+CREATE OR REPLACE FUNCTION temp_avg(varchar,varchar,int) RETURNS double precision
+AS '
+SELECT avg(t_temp) FROM temp WHERE t_master=$1 AND t_module=$2 AND t_temp_avg IS NULL
+HAVING count(t_temp)>$3
+' 
+LANGUAGE 'sql';
+
+CREATE OR REPLACE FUNCTION update_temp_avg(varchar,varchar,int) RETURNS double precision
+AS '
+UPDATE temp SET t_temp_avg=temp_avg($1,$2,$3) WHERE t_master=$1 AND t_module=$2 AND t_temp_avg IS NULL
+AND t_time IN (SELECT max(t_time) FROM temp WHERE t_master=$1 AND t_module=$2 AND t_temp_avg IS NULL);
+
+DELETE FROM temp WHERE t_master=$1 AND t_module=$2 AND t_temp_avg IS NULL 
+AND t_id BETWEEN 0 AND (SELECT max(t_id) FROM temp WHERE t_master=$1 AND t_module=$2 AND t_temp_avg IS NOT NULL);
+
+SELECT t_temp_avg FROM temp WHERE t_master=$1 AND t_module=$2 AND t_temp_avg IS NOT NULL ORDER BY t_time DESC LIMIT 1;
+'
+LANGUAGE 'sql';
+
+
+
+CREATE OR REPLACE FUNCTION global_change() RETURNS "trigger"
+AS $$
+BEGIN
+
+IF  NEW.g_day=1 THEN
+NEW.g_t=NEW.g_t_day;
+END IF;
+
+IF  NEW.g_day=0 THEN
+NEW.g_t=NEW.g_t_night;
+END IF;
+
+IF  NEW.g_empty=1  THEN
+NEW.g_t=NEW.g_t_day_empty;
+END IF;
+
+IF NEW.g_vacation=1  THEN
+NEW.g_t=NEW.g_t_vacation;
+END IF;
+
+IF NEW.g_winter=0 THEN
+NEW.g_t=NEW.g_t_vacation;
+END IF;
+
+RETURN NEW;
+END;
+$$
+LANGUAGE plpgsql;
+
+
+CREATE TRIGGER global_change
+BEFORE UPDATE ON global
+FOR EACH ROW
+EXECUTE PROCEDURE global_change();
+
+
+CREATE OR REPLACE FUNCTION need_to_heat() RETURNS Integer
+AS $$
+SELECT 1  
+FROM global
+WHERE g_t1 <= g_t - g_t_hist 
+UNION
+SELECT -1
+FROM global
+WHERE g_t1 >= g_t + g_t_hist 
+UNION
+SELECT 0                                          
+FROM global
+WHERE g_t1 > g_t - g_t_hist AND g_t1 < g_t + g_t_hist
+
+
+$$ LANGUAGE 'sql';
+
+CREATE OR REPLACE FUNCTION need_to_heat_cw() RETURNS Integer
+AS $$
+SELECT 1  
+FROM global
+WHERE g_waterheating=1 AND input_state('CCW')='1'
+UNION
+SELECT -1
+FROM global
+WHERE g_waterheating=0 OR input_state('CCW')='0'
+
+$$ LANGUAGE 'sql';
+
+update modules set m_symbol='R.ScP.P', m_name='Roleta schody piwnica, prawa',	m_sleep=26 where m_adr='05';
+update modules set m_symbol='R.ScP.L', m_name='Roleta schody piwnica, lewa',	m_sleep=26 where m_adr='06';
+update modules set m_symbol='R.Sc.P', m_name='Roleta schody poddasze, prawa',	m_sleep=26 where m_adr='08';
+update modules set m_symbol='R.Sc.L', m_name='Roleta schody poddasze, lewa',	m_sleep=26 where m_adr='07';
+
+
+update modules set m_symbol='R.Sy.L', m_name='Roleta sypialnia, lewa',		m_sleep=60 where m_adr='0A';
+update modules set m_symbol='R.Sy.P', m_name='Roleta sypialnia, prawa',		m_sleep=45 where m_adr='01';
+
+update modules set m_symbol='R.La', m_name='Roleta lazienka na dole',		m_sleep=40 where m_adr='0C';
+update modules set m_symbol='R.Pr.P', m_name='Roleta pracownia, prawa',		m_sleep=16 where m_adr='03';
+update modules set m_symbol='R.Pr.T', m_name='Roleta pracownia, taras',		m_sleep=60 where m_adr='0B';
+
+update modules set m_symbol='R.Ku', m_name='Roleta kuchnia',			m_sleep=70 where m_adr='0E';
+update modules set m_symbol='R.Pi', m_name='Roleta piotr',			m_sleep=40 where m_adr='0D';
+
+update modules set m_symbol='R.Sa.P', m_name='Roleta salon, prawa',		m_sleep=60 where m_adr='02';
+update modules set m_symbol='R.Sa.L', m_name='Roleta salon, lewa',		m_sleep=75 where m_adr='09';
+
+
+
+update modules set m_name='wolna gorna' where m_adr='04';
+update modules set m_name='wolna dolna'	where m_adr='0F';
+
+
+
+
+
+SELECT m_name,m_adr from modules WHERE m_type='R';
+
+
+
+DELETE FROM outputs;
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo sauna','PA','0K',9);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo ping-pong','PA','0K',8);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo kotlownia','PA','0K',7);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo ping-pong 2','PA','0K',6);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Gniazdo wzmacinacz','PA','0K',5);
+
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo wiatrolap','PA','0G',8);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo pracownia','PA','0G',7);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo salon okno','PA','0G',6);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo korytarz parter','PA','0G',5);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo kuchnia','PA','0G',4);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo sypialnia lesna','PA','0G',3);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo schody piwnica','PA','0G',2);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo lazienka','PA','0G',1);
+INSERT INTO outputs (o_name,o_master,o_module,o_adr) VALUES ('Swiatlo sypialnia','PA','0G',0);
+

@@ -1,0 +1,8 @@
+body { background-color: #fff !important; background-image: transparent !important; }
+
+.body_h_right, .body_m_l, .navi_bar, .mapa, .body_menu { display: none !important; }
+
+
+.body_m_right { float: left; }
+
+object { display: none !important; }

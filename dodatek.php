@@ -1,0 +1,58 @@
+<?
+$sent[]="Szczê¶cie to jest sposób my¶lenia, a nie rzecz, któr± dostajemy.";
+$sent[]="Je¶li szczê¶cie zale¿y od sposobu my¶lenia, jest rzecz± konieczn± pozbyæ siê my¶li, które sprowadzaj± uczucie przygnêbienia i zniechêcenia...";
+$sent[]="Je¶li masz problem, poznaj jego przyczynê a bêdziesz szczê¶liwszy.";
+$sent[]="Istniej± jedynie dwie drogi do szczê¶cia. Pierwsza to mi³o¶æ, druga to praca. Po pierwsze w stosunkach z lud¼mi zawsze dawaæ mi³o¶æ. Po drugie znale¼æ sobie pracê, która daje przyjemno¶æ i wk³adaæ w ni± 100% swojej energii. Kochaj mi³o¶æ i czerp przyjemno¶æ z pracy, a bêdziesz mia³ zagwarantowane szczê¶cie i pomy¶lno¶æ.";
+$sent[]="Kiedy wiesz czego szukasz, jest ³atwiej to znale¼æ.";
+$sent[]="Szczê¶cie nie jest nigdy czym¶ danym. Wyp³ywa z aktywno¶ci ludzkiej. Najczê¶ciej uto¿samia siê je z wykonywan± z w³asnego wyboru prac±, mi³o¶ci±, spokojem wewnêtrznym oraz rado¶ci±.";
+$sent[]="To my¶li s± tym, co szczê¶liwie uk³ada cz³owiekowi ¿ycie.";
+$sent[]="Droga do szczê¶cia prowadzi przez ¶wiêto¶æ.";
+$sent[]="Wszystko nam wolno. Jeste¶my stworzeni jako ludzie wolni z woln± wol±, ale nie wszystko przynosi korzy¶æ i jest w³a¶ciwe. I to czy bêdziemy szczê¶liwi, czy nie, zale¿y od tego co wybierzemy.";
+$sent[]="Spe³nienie pragnienia bez pozytywnego wyobra¿enia o nim prowadzi do pora¿ki. Je¶li Twoje pragnienie stoi w sprzeczno¶ci z wyobra¿eniem to ostatnie oka¿e siê zawsze silniejsze - Prawo odwrotnego skutku.";
+$sent[]="Wyobra¿aj sobie tylko rzeczy dobre i piêkne, które chcesz aby zaistnia³y w Twoim ¿yciu. Ty i Twój los dobry lub z³y jest tym czym Twoje my¶li, wyobra¿enia i uczucia.";
+$sent[]="Szczê¶liwy, kto m±dro¶æ osi±gn±³.";
+$sent[]="Szczê¶cie jest jak echo, które odzywa siê, kiedy dajemy samych siebie.";
+$sent[]="Je¶li chcesz do¶wiadczaæ szczê¶cia, nie koncentruj swych my¶li siê na tym czego nie masz, ale ciesz siê tym co posiadasz i b±d¼ za to wdziêczny, a Twoja rado¶æ siê zwielokrotni.";
+$sent[]="Nie szukaj szczê¶cia, ale dawaj je innym, a wtedy samo przyjdzie do Ciebie.";
+$sent[]="Sekret szczê¶cia polega na tym, ¿eby robiæ to co siê lubi lub lubiæ to co siê robi. I to nie Twoja sytuacja i zewnêtrzne okoliczno¶ci czyni± Ciê szczê¶liwym lub nie, ale Twoje usposobienie... ";
+$sent[]="To nie Twoja sytuacja czy okoliczno¶ci zewnêtrzne czyni±  Ciê szczê¶liwym lub nie, lecz Twoje usposobienie.";
+$sent[]="Szczê¶cie to nie stacja kolejowa, na której wysiadasz, lecz sposób w jaki podró¿ujesz.";
+$sent[]="Nie szukaj szczê¶ci, lecz dawaj je innym, a wtedy samo do Ciebie przyjdzie.";
+$sent[]="Rado¶æ i szczê¶cie s± wyborem.";
+$sent[]="Bóg da³ nam woln± wolê i to od nas zale¿y co wybierzemy czy szczê¶cie czy nie...";
+$sent[]="Cz³owiek m±dry to cz³owiek szczê¶liwy. ";
+$sent[]="M±dro¶æ cz³owieka polega na tym, aby tak urz±dzi³ sobie ¿ycie, ¿eby by³ szczê¶liwym.";
+$sent[]="Szczê¶cie jest to stan umys³u powodowany ¶wiadomo¶ci± pozostawiania po sobie w ka¿dej chwili ¿ycia czego¶ dobrego.";
+$sent[]="Szczê¶cie  i dobre samopoczucie cz³owieka zale¿y od tego jak my¶li o problemie, o sobie i o drugim cz³owieku, o sytuacji, zdarzeniach, które go spotykaj± o otaczaj±cej go rzeczywisto¶ci, ¶wiecie zewnêtrznym, ¶rodowisku w którym ¿yje oraz od tego jak postrzega ka¿d± chwilê swojego ¿ycia i jak j± wykorzystuje, traktuje, jak patrzy na swoj± przysz³o¶æ czy z nadzieja i wiar± czy nie...";
+$sent[]="Szczê¶cie cz³owieka pochodzi z jego wnêtrza, czystego serca i sumienia, a nie z samozadowolenia czy aprobaty zewnêtrznej.    ";
+$sent[]="Szczê¶cie to nie znaczy mieæ co¶, tylko kogo¶.";
+$sent[]="Szczê¶cia nie nale¿y szukaæ w lepszych warunkach otoczenia i w ¶wiecie zewnêtrznym, tylko w sobie...";
+$sent[]="Ten kto zaspokoi najwiêkszy problem ludzko¶ci - sprzeda szczê¶cie, ten zarobi najwiêcej pieniêdzy.";
+$sent[]="Nie szukaj szczê¶cia, lecz dawaj je innym, a wtedy samo przyjdzie do Ciebie.";
+$sent[]="Najlepszym sposobem na prawdziw± rado¶æ jest s³u¿enie innym.";
+$sent[]="Przez cierpienie trzeba przej¶æ, aby poznaæ szczê¶cie.";
+$sent[]="Jedno jest w ¿yciu szczê¶cie - kochaæ i byæ kochanym.";
+$sent[]="Cz³owiek jest szczê¶liwy tylko wtedy, kiedy kocha i co¶ daje. Albowiem wiêkszym szczê¶ciem jest dawaæ ni¿ braæ. ";
+$sent[]="Kropla mi³o¶ci znaczy wiêcej ni¿ ocean rozumu.- Pascal Blaise (1623-1662)";
+$sent[]="Chroñmy siê od pogardy dla kogokolwiek, nawet dla najgorszego cz³owieka, bo to jest jeszcze cz³owiek, a¿ ... cz³owiek! ";
+$sent[]="Szczê¶cie przychodzi do tego kto za nim nie goni. ";
+$sent[]="Dostrzegajmy to co warto¶ciowe i bezcenne w naszym ¿yciu i cieszmy siê tym bêd±c szczê¶liwsi.";
+$sent[]="Nie stajesz siê szczê¶liwy, przez d±¿enie do szczê¶cia. Stajesz siê szczê¶liwy prowadz±c ¿ycie maj±ce warto¶æ. ";
+$sent[]="Szczê¶cie jest podobne do motyla. Gdy zanim gonisz, odlatuje i ukrywa siê, gdy jednak dasz mu spokój i zajmiesz siê po¿ytecznymi rzeczami, zakradnie siê z ty³u i usi±dzie Ci na ramieniu.";
+$sent[]="Z radosnym zadowoleniem mo¿esz pomy¶leæ o dobrymwczorajszym dniu oraz pomarzyæ o pomy¶lnym za³atwieniu spraw dnia jutrzejszego. Ale nie mo¿esz zagubiæ siebie we 'wczoraj' albo w 'jutro'. ";
+$sent[]="Wczoraj przeminê³o bezpowrotnie, a jutro dopiero nadejdzie. Dzisiajto jedyny dzieñ. Twój dzieñ. Uczyñ go najlepszym dniem twojego ¿ycia. ";
+$sent[]="Dzieliæ siê rado¶ci± to dwa razy tyle rado¶ci, dzieliæ siê smutkiem to po³owa smutku. ";
+$sent[]="Rozmawiaj! Rozmawiaj! Rozmawiaj! Cisza i obojêtno¶æ mog± raniæ o wiele bardziej, ani¿eli broñ. ";
+$sent[]="Otrzyma³e¶ rêce, ¿eby dawaæ, serce, które ma kochaæ i dwoje ramion, maj±cych obj±æ drugiego cz³owieka braterskim u¶ciskiem. ";
+$sent[]="Zanim os±dzisz, spróbuj zrozumieæ. ";
+$sent[]="Cz³owiek, który umie ¿yæ w harmonii z samym sob± jest szczê¶liwy.";
+$sent[]="Nie ma wiêkszej rado¶ci dla g³upiego, jak znale¼æ g³upszego od siebie.";
+$sent[]="Szczê¶cie to jedyna warto¶æ, która siê mno¿y, je¶li siê j± dzieli.";
+$sent[]="Jedna minuta gniewu odbiera 60 sekund szczê¶cia. ";
+$sent[]="Dbaj o swoje szczê¶cie, aby trwa³o ca³y czas, inaczej odejdzie. ";
+$sent[]="Cz³owieku, nie jeste¶ stworzony ani dla produkcji, ani dla przemys³u, ani dla konta w banku - jeste¶ stworzony, aby byæ szczê¶liwym i wolnym duchowo cz³owiekiem. ";
+
+$wynik=date('H:i')."\n".$sent[rand(0,count($sent))];
+
+echo urlencode($wynik);
+?>

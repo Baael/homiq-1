@@ -1,0 +1,207 @@
+###########################MYTHTV#################################
+#mythtv
+# Channel Up
+begin
+prog = mythtv
+button = CH+
+repeat = 3
+config = Up
+end
+
+# Channel Down
+begin
+prog = mythtv
+button = CH-
+repeat = 3
+config = Down
+end
+
+# Vol Up
+begin
+prog = mythtv
+button = VOL+
+repeat = 3
+config = Right
+end
+
+# Vol Down
+begin
+prog = mythtv
+button = VOL-
+repeat = 3
+config = Left
+end
+
+
+# OK/Select
+begin
+prog = mythtv
+button = ENTER
+repeat = 3
+config = Return
+end
+
+# Menu
+begin
+prog = mythtv
+button = MENU
+repeat = 3
+config = M
+end
+
+# Play
+begin
+prog = mythtv
+button = PAUSE
+repeat = 3
+config = P
+end
+
+# Stop
+begin
+prog = mythtv
+button = STOP
+repeat = 3
+config = Q
+end
+
+# Exit
+begin
+prog = mythtv
+button = POWER
+repeat = 3
+config = Q
+end
+
+# Exit
+begin
+prog = mythtv
+button = CANCEL
+repeat = 3
+config = Esc
+end
+
+begin
+prog = mythtv
+button = FASTFORWARD
+repeat = 3
+config = PgDown
+end
+
+
+begin
+prog = mythtv
+button = REWIND
+repeat = 3
+config = PgUp
+end
+
+begin
+prog = mythtv
+button = NEXT
+repeat = 3
+config = End
+end
+
+
+begin
+prog = mythtv
+button = PREVIOUS
+repeat = 3
+config = Home
+end
+
+begin
+prog = mythtv
+button = RED
+repeat = 3
+config = T
+end
+
+begin
+prog = mythtv
+button = GREEN
+repeat = 3
+config = Space
+end
+
+# Record
+begin
+prog = mythtv
+button = REC
+repeat = 3
+config = R
+end
+
+
+# Numbers 0-9
+
+begin
+prog = mythtv
+button = 0
+repeat = 3
+config = 0
+end
+
+begin
+prog = mythtv
+button = 1
+repeat = 3
+config = 1
+end
+
+begin
+prog = mythtv
+button = 2
+repeat = 3
+config = 2
+end
+
+begin
+prog = mythtv
+button = 3
+repeat = 3
+config = 3
+end
+
+begin
+prog = mythtv
+button = 4
+repeat = 3
+config = 4
+end
+
+begin
+prog = mythtv
+button = 5
+repeat = 3
+config = 5
+end
+
+begin
+prog = mythtv
+button = 6
+repeat = 3
+config = 6
+end
+
+begin
+prog = mythtv
+button = 7
+repeat = 3
+config = 7
+end
+
+begin
+prog = mythtv
+button = 8
+repeat = 3
+config = 8
+end
+
+begin
+prog = mythtv
+button = 9
+repeat = 3
+config = 9
+end

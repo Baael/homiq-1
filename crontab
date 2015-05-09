@@ -1,0 +1,3 @@
+*/10	*	*	*	*	/home/homiq/google.sh
+3,9,16  *       *       *       *       /usr/bin/rdate -s ntp.task.gda.pl
+30      3       *       *       *       /home/homiq/dump.sh

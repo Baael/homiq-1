@@ -1,0 +1,48 @@
+a      		{	text-decoration: none;	}
+a:hover     {	text-decoration: underline;	}
+h1		{ margin:0; }
+h2		{ margin:0; }
+h3		{ margin:0; }
+h4		{ margin:0; }
+h5		{ margin:0; }
+h6		{ margin:0; }
+form,input,div,p { margin:0; padding:0; }
+img		{border: 0; }
+
+.stopka { color: #ffb41e; font-size: 11px; }
+
+.header_gora { float: right; padding-top: 16px; color: #ffffff; font-size: 13px; }
+
+.header_agenci { float: right; padding-top: 3px; color: #ffffff; font-size: 12px; }
+
+.header_gora_bez { float: right; height: 48px; color: #ffffff; font-size: 13px; }
+
+.header_dol {  height: 42px; }
+
+.header_dol_zsep { height: 42px;}
+
+.box_orange { text-align: left; }
+
+.box_szary { text-align: left; }
+
+.box_szary_tekst { text-align: left; }
+
+.box_orange_tekst { text-align: left; }
+
+.box_orange_menu { text-align: left; }
+
+.box_orange_menu2 { text-align: left; }
+
+.site_title { padding: 10px 10px 3px 10px; }
+
+.site_path { padding: 0px 10px 20px 10px; color: #c8c7c7; font-size: 11px; }
+
+.hotel_info { padding: 0 10px 10px 10px; color: #a6a6a6; font-size: 12px; }
+
+.szara_belkatytulowa { background-color: #c5c5c5; color: #ffffff; font-size: 13px; padding: 8px 10px; }
+
+.path_site { color: #bab6b7; font-size: 11px; margin: 10px 0 0 0; width: 750px; height: 14px; overflow: hidden; }
+
+.box_orange_menu_kraj { background-color: #E3E3E3; color: #000000; }
+
+.topmenu_link { display: block; color: #ffffff; border-left: 1px solid #ffffff; background-position: top left; background-repeat: repeat-x; width: auto; text-align: center; padding: 12px 0 13px 0; font-size: 14px;}

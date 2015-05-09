@@ -1,0 +1,326 @@
+DELETE FROM action;
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','01','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','01','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','01','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','01','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','01','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','01','','U','s');
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','02','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','02','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','02','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','02','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','02','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','02','','U','s');
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','03','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','03','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','03','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','03','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','03','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','03','','U','s');
+
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','05','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','05','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','05','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','05','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','05','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','05','','U','s');
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','06','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','06','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','06','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','06','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','06','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','06','','U','s');
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','07','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','07','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','07','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','07','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','07','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','07','','U','s');
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','08','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','08','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','08','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','08','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','08','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','08','','U','s');
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','09','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','09','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','09','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','09','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','09','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','09','','U','s');
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','0A','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','0A','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','0A','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','0A','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','0A','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','0A','','U','s');
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','0B','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','0B','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','0B','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','0B','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','0B','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','0B','','U','s');
+
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','0C','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','0C','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','0C','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','0C','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','0C','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','0C','','U','s');
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','0D','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','0D','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','0D','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','0D','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','0D','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','0D','','U','s');
+
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','U',1, 0,'PA','0E','','d','d');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','U',2,-1,'PA','0E','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','u',2, 0,'PA','0E','','U','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('zatrzymanie',    'PA','0G',1,'','d',2, 0,'PA','0E','','D','s');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('na dol',         'PA','0G',1,'','D',1, 0,'PA','0E','','u','u');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('stop po czasie', 'PA','0G',1,'','D',2,-1,'PA','0E','','U','s');
+
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('on',         'PA','0K',1,'','0',1, 0,'PA','0K','9','1','1');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('off',         'PA','0K',1,'','1',1, 0,'PA','0K','9','0','0');
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('on',         'PA','0K',2,'','0',1, 0,'PA','0K','8','1','1');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('off',         'PA','0K',2,'','1',1, 0,'PA','0K','8','0','0');
+
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('on',         'PA','0K',4,'0','0',1, 0,'PA','0K','7','1','1');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('off',         'PA','0K',4,'1','1',1, 2,'PA','0K','7','0','0');
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('on',         'PA','0K',8,'','0',1, 0,'PA','0K','6','1','1');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('off',         'PA','0K',8,'','1',1, 0,'PA','0K','6','0','0');
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('on',         'PA','0G',64,'','0',1, 0,'PA','0G','2','1','1');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('on',         'PA','0G',64,'','0',1, 30,'PA','0G','2','0','0');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('off',         'PA','0G',64,'','1',1, 0,'PA','0G','2','0','0');
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('on',         'PA','0G',64,'','0',1, 0,'PA','0G','8','1','1');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('on',         'PA','0G',64,'','0',1, 30,'PA','0G','8','0','0');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_sleep,a_output_master,a_output_module,a_output_adr,a_output_state,a_output_val)
+VALUES ('off',         'PA','0G',64,'','1',1, 0,'PA','0G','8','0','0');
+
+
+
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_macro)
+VALUES ('on',         'PA','0G',32,'0','0',1, 'SOFF');
+
+INSERT INTO action (a_name,a_input_master,a_input_module,a_input_adr,a_input_state,a_input_module_state,a_pri,a_macro)
+VALUES ('off',         'PA','0G',32,'1','1',1, 'SON');
+
+
