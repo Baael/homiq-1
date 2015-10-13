@@ -1350,7 +1350,7 @@ class HOMIQ
 		$params['m_adr']=$m_adr;
 
 
-		$sql="SELECT mm_child,mm_params,mm_sleep FROM macromacro WHERE mm_parent='$symbol' ORDER BY mm_id";
+		$sql="SELECT mm_child,mm_params,mm_sleep FROM macromacro WHERE mm_parent='$symbol'  AND (mm_sleep IS NULL OR mm_sleep>=0) ORDER BY mm_id";
 		$res=$this->ado('execute',$sql);
 
 		if ($res) for ($i=0;$i<$res->RecordCount();$i++)

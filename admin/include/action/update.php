@@ -20,15 +20,15 @@
 				$update[$nazwa]['keyvalue']=$v;
 				continue;
 			}
-			$v=addslashes(stripslashes($v));
+			$v=str_replace("'","''",stripslashes($v));
+
 			$update[$nazwa]['inserts'][]=$k;
 			$update[$nazwa]['values'][]="'$v'";
 			$update[$nazwa]['set'][]="$k='$v'";
 		}
 	}
 
-	//print_r($update);
-	//print_r($_REQUEST);
+	//echo '<pre>';print_r($update);print_r($_REQUEST);die();
 
 	foreach ($update AS $table=>$v)
 	{
