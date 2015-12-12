@@ -21,15 +21,10 @@ fi
 
 if [ -f ifconf ]
 then
-	sh ifconf	
+	sudo ./ifconf	
 fi
 
+./homiq_start.sh
 
-if [ "`id -u`" = "0" ]
-then
-	su www-data ./homiq_start.sh
-else
-	sudo su www-data ./homiq_start.sh
-fi
 echo "ok"
 
