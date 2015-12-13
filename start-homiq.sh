@@ -1,3 +1,6 @@
+#!/bin/sh
+
+cd  `dirname $0`
 
 while [ "1" = "1" ]
 do
@@ -9,7 +12,7 @@ do
 		break
 	fi
 	sleep 1
-	echo dupa
+	echo "[`date`] No database" >> homiq.log
 done
 
 
