@@ -9,7 +9,7 @@ require (dirname(__FILE__).'/crc.php');
 require (dirname(__FILE__).'/shmop.db.php');
 
 define ('DEBUG_BASIC', 1);
-define ('DEBUG_DB',		2);
+define ('DEBUG_DB',2);
 define ('DEBUG_RFRAMES',4);
 define ('DEBUG_SFRAMES',8);
 define ('DEBUG_AFRAMES',16);
@@ -39,7 +39,7 @@ class HOMIQ
 	var $servermode;
 	var $macro_stack=array();
 	var $pkt_id;
-	var $send;
+	var $sendmem=null;
 
 
 
@@ -48,7 +48,7 @@ class HOMIQ
 		$this->debug=$debug;
 		$this->servermode=$server;
 		$this->init('',$server);
-		$this->send=new SCHMOP_DB('send');
+		$this->sendmem=new SCHMOP_DB('send');
 	}
 
 	function debug($txt,$state)
@@ -193,15 +193,19 @@ class HOMIQ
 
 		$t=time();
 
-		/*OLD DB SEND
-		$sql="DELETE FROM send WHERE s_sent=0 AND s_queue<$t";
-		$this->ado('execute',$sql);
-		*/
+
+		if ($this->sendmem) {
+			$this->sendmem->delete(array(
+				array('s_sent',0),
+				array('s_queue',$t,'<')
+			));
+		} else {
+			$sql="DELETE FROM send WHERE s_sent=0 AND s_queue<$t";
+			$this->ado('execute',$sql);
+		}
+
 		
-		$this->send->delete(array(
-			array('s_sent',0),
-			array('s_queue',$t,'<')
-		));
+
 
 
 		//$sql="INSERT INTO log(l_line) VALUES ('START')";
@@ -222,23 +226,27 @@ class HOMIQ
 				{
 					$this->masters[$id]['child']=$fork;
 
-					/* OLD DB SEND
-					$sql="SELECT s_pkt FROM send WHERE s_sent>0 AND s_pkt>1 AND s_master='$id' ORDER BY s_id DESC LIMIT 1";
-					parse_str($this->ado('ado_query2url',$sql));
-					$this->pkt_id[$id]=$s_pkt;
-					*/
 
-					$send=$this->send->select(array(
-						array('s_sent',0,'>'),
-						array('s_pkt',1,'>'),
-						array('s_master','$id'),
-						)
-					);
-					if (count($send))
-					{
-						$k=max(array_keys($send));
-						if (isset($send[$k]['s_pkt'])) $this->pkt_id[$id]=$send[$k]['s_pkt'];
+					if ($this->sendmem) {
+						$send=$this->sendmem->select(array(
+							array('s_sent',0,'>'),
+							array('s_pkt',1,'>'),
+							array('s_master','$id'),
+							)
+						);
+						if (count($send))
+						{
+							$k=max(array_keys($send));
+							if (isset($send[$k]['s_pkt'])) $this->pkt_id[$id]=$send[$k]['s_pkt'];
+						}
+
+					} else {
+						$sql="SELECT s_pkt FROM send WHERE s_sent>0 AND s_pkt>1 AND s_master='$id' ORDER BY s_id DESC LIMIT 1";
+						parse_str($this->ado('ado_query2url',$sql));
+						$this->pkt_id[$id]=$s_pkt;
 					}
+
+
 				}
 				else $this->reader($id);
 				 
@@ -323,27 +331,29 @@ class HOMIQ
 		$insert=time();
 		$runsql=addslashes($runsql);
 
-		/*OLD SEND BY DB
-		$sql="INSERT INTO send (s_insert,s_queue,s_time,s_master,s_cmd,s_val,s_src,s_dst,s_pkt,s_top,s_zero,s_sql) 
-			VALUES ($insert,$t,0,'$id','$cmd','$val','$src','$dst',$pkt,'$top',$zer,'$runsql')";
-		$this->ado('execute',$sql);
-		*/
 
-		$this->send->insert(array(
-			's_insert'=>$insert,
-			's_queue'=>$t,
-			's_time'=>0,
-			's_sent'=>0,
-			's_master'=>$id,
-			's_cmd'=>$cmd,
-			's_val'=>$val,
-			's_src'=>$src,
-			's_dst'=>$dst,
-			's_pkt'=>$pkt,
-			's_top'=>$top,
-			's_zero'=>$zer,
-			's_sql'=>$runsql,
-		));
+		if ($this->sendmem) {
+			$this->sendmem->insert(array(
+				's_insert'=>$insert,
+				's_queue'=>$t,
+				's_time'=>0,
+				's_sent'=>0,
+				's_master'=>$id,
+				's_cmd'=>$cmd,
+				's_val'=>$val,
+				's_src'=>$src,
+				's_dst'=>$dst,
+				's_pkt'=>$pkt,
+				's_top'=>$top,
+				's_zero'=>$zer,
+				's_sql'=>$runsql,
+			));
+		} else {
+			$sql="INSERT INTO send
+ 				(s_insert,s_queue,s_time,s_master,s_cmd,s_val,s_src,s_dst,s_pkt,s_top,s_zero,s_sql) 
+				VALUES ($insert,$t,0,'$id','$cmd','$val','$src','$dst',$pkt,'$top',$zer,'$runsql')";
+			$this->ado('execute',$sql);
+		}
 
 		$this->update_macro_stack($t);
 
@@ -413,17 +423,17 @@ class HOMIQ
 		{
 			$t=time();
 
-			/* OLD SEND BY DB
-			$sent=($s_top=='a')?",s_sent=$t":'';
-			$sql="UPDATE send SET s_time=$t,s_pkt=$s_pkt $sent WHERE s_id=$s_id";
-			$this->ado('execute',$sql);
-			*/
-
+			if ($this->sendmem) {
 			
-			$data=array('s_time'=>$t, 's_pkt'=>$s_pkt);
-			if ($s_top=='a') $data['s_sent']=$t;
+				$data=array('s_time'=>$t, 's_pkt'=>$s_pkt);
+				if ($s_top=='a') $data['s_sent']=$t;
 			
-			$this->send->update($s_id,$data);
+				$this->sendmem->update($s_id,$data);
+			} else {
+				$sent=($s_top=='a')?",s_sent=$t":'';
+				$sql="UPDATE send SET s_time=$t,s_pkt=$s_pkt $sent WHERE s_id=$s_id";
+				$this->ado('execute',$sql);
+			}
 
 			return true;
 		}
@@ -444,47 +454,55 @@ class HOMIQ
 		$t=time();
 
 		/*OLD SEND BY DB
-		$sql="SELECT * FROM send WHERE s_sent=0 AND s_top='a' AND s_queue<=$t ORDER BY s_id";
-		$res=@$this->ado('execute',$sql);
-		if (!$res)
-		{
-			$this->reconnect();
-			return;
-		}
-		if ($res) for ($i=0;$i<$res->RecordCount();$i++)
-		{
-			$this->sendframe($this->ado('ado_ExplodeName',$res,$i));
-		}
+
 		*/
 
-		$send=$this->send->select(array(
-			array('s_top','a'),
-			array('s_sent',0),
-			array('s_queue',$t,'<='),
-		));
+		if ($this->sendmem) {
+			$send=$this->sendmem->select(array(
+				array('s_top','a'),
+				array('s_sent',0),
+				array('s_queue',$t,'<='),
+			));
 
-		foreach ($send AS $k=>$s)
-		{
-			$url=$this->send->array2url($s).'&s_id='.$k;
-			$this->sendframe($url."&signo=$signo");
+			foreach ($send AS $k=>$s)
+			{
+				$url=$this->sendmem->array2url($s).'&s_id='.$k;
+				$this->sendframe($url."&signo=$signo");
+			}
+
+
+			$send=$this->sendmem->select(array(
+				array('s_top','s'),
+				array('s_sent',0),
+				array('s_queue',$t,'<='),
+			));
+
+		} else {
+			$sql="SELECT * FROM send WHERE s_sent=0 AND s_top='a' AND s_queue<=$t ORDER BY s_id";
+			$res=@$this->ado('execute',$sql);
+			if (!$res)
+			{
+				$this->reconnect();
+				return;
+			}
+			if ($res) for ($i=0;$i<$res->RecordCount();$i++)
+			{
+				$this->sendframe($this->ado('ado_ExplodeName',$res,$i)."&signo=$signo");
+			}
+		}
+
+		if (!$this->sendmem) {
+			$send=array();
+			$sql="SELECT * FROM send WHERE s_sent=0 AND s_top='s' AND s_queue<=$t ORDER BY s_queue,s_id";
+			$res=$this->ado('execute',$sql);
+			if ($res) for ($i=0;$i<$res->RecordCount();$i++) $send[]=$this->ado('ado_ExplodeName',$res,$i);
+				
 		}
 
 
-		$send=$this->send->select(array(
-			array('s_top','s'),
-			array('s_sent',0),
-			array('s_queue',$t,'<='),
-		));
-
-		/*OLD SEND BY DB
-		$sql="SELECT * FROM send WHERE s_sent=0 AND s_top='s' AND s_queue<=$t ORDER BY s_queue,s_id";
-		$res=$this->ado('execute',$sql);
-		if ($res) for ($i=0;$i<$res->RecordCount();$i++)
-		*/
 		foreach ($send AS $k=>$s)	
 		{
-			//$url=$this->ado('ado_ExplodeName',$res,$i);
-			$url=$this->send->array2url($s).'&s_id='.$k;
+			$url=$this->sendmem ? $this->sendmem->array2url($s).'&s_id='.$k : $s;
 			$s_retry=0;
 			$s_time=0;
 			parse_str($url);
@@ -494,25 +512,27 @@ class HOMIQ
 
 			if ( $s_retry>5 ) 
 			{
-				/*OLD SEND BY DB
-				$sql="DELETE FROM send WHERE s_id=$s_id";
-				$res=$this->ado('execute',$sql);
-				*/
-				$this->send->delete($k);
-				$this->debug("Deleting send request (sid=$k) due to $s_retry retry failures",DEBUG_BASIC);	
+				if ($this->sendmem) {
+					$this->sendmem->delete($k);
+					
+				} else {
+					$sql="DELETE FROM send WHERE s_id=$s_id";
+					$res=$this->ado('execute',$sql);
+				}
+				$this->debug("Deleting send request (sid=$s_id) due to $s_retry retry failures",DEBUG_BASIC);	
 				continue;
 			}
 
 			if ( $s_time && $t-$s_time>=2 ) 
 			{
-
-				/*OLD SEND BY DB
-				$sql="UPDATE send SET s_retry=s_retry+1,s_queue=$t WHERE s_id=$s_id";
-				$res=$this->ado('execute',$sql);
-				*/
-
 				$url.="&s_pkt=0&s_retry=".($s_retry+1);
-				$this->send->update($k,'s_retry',$s_retry+1);
+				
+				if ($this->sendmem) {
+					$this->sendmem->update($k,'s_retry',$s_retry+1);
+				} else {
+					$sql="UPDATE send SET s_retry=s_retry+1,s_queue=$t WHERE s_id=$s_id";
+					$res=$this->ado('execute',$sql);
+				}
 			}
 			
 			$this->sendframe($url."&signo=$signo");
@@ -521,6 +541,10 @@ class HOMIQ
 		
 		$this->semafor=false;
 	}
+
+
+
+
 
 	function nextsign($sign)
 	{
@@ -621,27 +645,36 @@ class HOMIQ
 				
 		
 				/*OLD SEND BY DB
-				$sql="SELECT s_id,s_sql FROM send WHERE s_master='$id' AND s_pkt=$pkt AND s_time>$t-60 AND s_top='s' AND s_sent=0 ORDER BY s_id DESC LIMIT 1";
-				parse_str($this->ado('ado_query2url',$sql));
 
-				$sql="UPDATE send SET s_sent=$t WHERE s_id=$s_id";
-				$this->ado('execute',$sql);
 				*/
 
-				$send=$this->send->select(array(
-					array('s_master',$id),
-					array('s_pkt',$pkt),
-					array('s_top','s'),
-					array('s_dst',$src),
-					array('s_sent',0),
-					array('s_time',$t-60,'>'),
-				));
-				if (count($send))
-				{
-					$k=max(array_keys($send));
-					$this->send->update($k,'s_sent',$t);
-					$s_sql=$send[$k]['s_sql'];	
-					$this->debug("Frame marked as sent [src=$src, sid=$k, pkt=$pkt]. Total frames ".count($send), DEBUG_BASIC);
+				if ($this->sendmem) {
+					$send=$this->sendmem->select(array(
+						array('s_master',$id),
+						array('s_pkt',$pkt),
+						array('s_top','s'),
+						array('s_dst',$src),
+						array('s_sent',0),
+						array('s_time',$t-60,'>'),
+					));
+					if (count($send))
+					{
+						$k=max(array_keys($send));
+						$this->sendmem->update($k,'s_sent',$t);
+						$s_sql=$send[$k]['s_sql'];	
+						$this->debug("Frame marked as sent [src=$src, sid=$k, pkt=$pkt]. Total frames ".count($send), DEBUG_BASIC);
+					}
+
+				} else {
+					$sql="SELECT s_id,s_sql FROM send 
+						WHERE s_master='$id' AND s_pkt=$pkt AND s_time>$t-60 AND s_top='s' AND s_sent=0 
+						AND s_dst='$src'
+						ORDER BY s_id DESC LIMIT 1";
+					parse_str($this->ado('ado_query2url',$sql));
+
+					$sql="UPDATE send SET s_sent=$t WHERE s_id=$s_id";
+					$this->ado('execute',$sql);
+					$this->debug("Frame marked as sent [src=$src, sid=$k, pkt=$pkt].", DEBUG_BASIC);
 				}
 
 						
@@ -680,23 +713,28 @@ class HOMIQ
 			{
 				$s_queue=0;
 				/*OLD SEND BY DB
-				$sql="SELECT max(s_queue) AS s_queue FROM send WHERE s_master='$id' AND s_dst='$src' AND s_top='a' AND s_pkt=$pkt AND s_cmd='$cmd'";
-				parse_str($this->ado('ado_query2url',$sql));
+
 				*/
 
-				
-				$send=$this->send->select(array(
-					array('s_master',$id),
-					array('s_pkt',$pkt),
-					array('s_top','a'),
-					array('s_cmd',$cmd),
-					array('s_dst',$src),
-				));
-				if (count($send))
-				{
-					$s_queues=array();
-					foreach ($send AS $s) $s_queues[]=$s['s_queue'];
-					$s_queue=max($s_queues);
+				if ($this->sendmem) {
+					$send=$this->sendmem->select(array(
+						array('s_master',$id),
+						array('s_pkt',$pkt),
+						array('s_top','a'),
+						array('s_cmd',$cmd),
+						array('s_dst',$src),
+					));
+					if (count($send))
+					{
+						$s_queues=array();
+						foreach ($send AS $s) $s_queues[]=$s['s_queue'];
+						$s_queue=max($s_queues);
+					}
+
+				} else {
+					$sql="SELECT max(s_queue) AS s_queue FROM send 
+						WHERE s_master='$id' AND s_dst='$src' AND s_top='a' AND s_pkt=$pkt AND s_cmd='$cmd'";
+					parse_str($this->ado('ado_query2url',$sql));
 				}
 
 
@@ -841,23 +879,29 @@ class HOMIQ
 	{
 		foreach ($this->masters AS $id=>$m)
 		{
-			$where=array(
-				array('s_sent',0,'>'),
-				array('s_pkt',1,'>'),
-				array('s_top','s'),
-				array('s_master',$id),
-			);
-			$send=$this->send->select($where);
-			if (is_array($send) && count($send))
-			{
-				$k=max(array_keys($send));
+			if ($this->sendmem) {
+
 				$where=array(
 					array('s_sent',0,'>'),
-					array('s_sent',time()-60,'<'),
+					array('s_pkt',1,'>'),
+					array('s_top','s'),
 					array('s_master',$id),
-					array('s_sent',$send[$k]['s_sent'],'!=')
 				);
-				$this->send->delete($where);
+				$send=$this->sendmem->select($where);
+				if (is_array($send) && count($send))
+				{
+					$k=max(array_keys($send));
+					$where=array(
+						array('s_sent',0,'>'),
+						array('s_sent',time()-60,'<'),
+						array('s_master',$id),
+						array('s_sent',$send[$k]['s_sent'],'!=')
+					);
+					$this->sendmem->delete($where);
+				}
+			} else {
+				$sql="DELETE FROM send WHERE s_master=$id AND s_sent<".(time()-24*3600);
+				$res=$this->ado('execute',$sql);
 			}
 		}
 	}
@@ -872,36 +916,37 @@ class HOMIQ
 			$lastping=0;
 			$lastsent=0;
 
-			$send=$this->send->select(array(
-				array('s_master',$id),
-				array('s_top','a'),
-			));
-			if (count($send))
-			{
-				$s_queues=array();
-				foreach ($send AS $s) $s_queues[]=$s['s_queue'];
-				$lastping=max($s_queues);
+			if ($this->sendmem) {
+				$send=$this->sendmem->select(array(
+					array('s_master',$id),
+					array('s_top','a'),
+				));
+				if (count($send))
+				{
+					$s_queues=array();
+					foreach ($send AS $s) $s_queues[]=$s['s_queue'];
+					$lastping=max($s_queues);
+				}
+
+				$send=$this->sendmem->select(array(
+					array('s_master',$id),
+					array('s_top','s'),
+				));
+				if (count($send))
+				{
+					$s_sents=array();
+					foreach ($send AS $s) $s_sents[]=$s['s_sent'];
+					$lastsend=max($s_sents);
+				}
+			} else {
+				$sql="SELECT max(s_queue) AS lastping FROM send WHERE s_master='$id' AND s_top='a'";
+				parse_str($this->ado('ado_query2url',$sql));			
+
+				$sql="SELECT max(s_sent) AS lastsent FROM send WHERE s_master='$id' AND s_top='s'";
+				parse_str($this->ado('ado_query2url',$sql));	
 			}
 
-			$send=$this->send->select(array(
-				array('s_master',$id),
-				array('s_top','s'),
-			));
-			if (count($send))
-			{
-				$s_sents=array();
-				foreach ($send AS $s) $s_sents[]=$s['s_sent'];
-				$lastsend=max($s_sents);
-			}
 
-
-			/* OLD DB SEND
-			$sql="SELECT max(s_queue) AS lastping FROM send WHERE s_master='$id' AND s_top='a'";
-			parse_str($this->ado('ado_query2url',$sql));			
-
-			$sql="SELECT max(s_sent) AS lastsent FROM send WHERE s_master='$id' AND s_top='s'";
-			parse_str($this->ado('ado_query2url',$sql));	
-			*/
 
 			$last=max($lastping,$lastsent);
 			$ile=$last?time()-$last:0;
@@ -1040,10 +1085,11 @@ class HOMIQ
 					if ($a_sleep==0)
 					{
 
-						/*OLD SEND BY DB
-						$postsql[]="DELETE FROM send WHERE s_master='$a_output_master' AND s_top='s' AND s_dst='$a_output_module'
+						
+						$postsql[]="DELETE FROM send WHERE s_master='$a_output_master' 
+								AND s_top='s' AND s_dst='$a_output_module'
 								AND s_queue>$t AND s_val='$a_output_val'";
-						*/
+						
 
 						$postsenddeletes[]=array(
 							array('s_master',$a_output_master),
@@ -1075,10 +1121,12 @@ class HOMIQ
 						$s_cmd='O.'.$a_output_adr;
 						$this->send($a_output_master,$s_cmd,$a_output_val,$a_output_module,$a_sleep,$runsql);
 						
-						/*OLD SEND BY DB
-						$postsql[]="DELETE FROM send WHERE s_master='$a_output_master' AND s_top='s' AND s_dst='$a_output_module'
-								AND s_cmd='$s_cmd' AND s_val='$a_output_val' AND s_queue>$t AND s_insert<$t";
-						*/
+						
+						$postsql[]="DELETE FROM send WHERE s_master='$a_output_master' 
+								AND s_top='s' AND s_dst='$a_output_module'
+								AND s_cmd='$s_cmd' AND s_val='$a_output_val' 
+								AND s_queue>$t AND s_insert<$t";
+						
 
 						$postsenddeletes[]=array(
 							array('s_master',$a_output_master),
@@ -1102,14 +1150,18 @@ class HOMIQ
 
 			
 		}
-		foreach ($postsql AS $sql) 
-		{
-			$this->ado('execute',$sql);
-		}
 
-		foreach ($postsenddeletes AS $where)
-		{
-			$this->send->delete($where);
+
+		if ($this->sendmem) {
+			foreach ($postsenddeletes AS $where)
+			{
+				$this->sendmem->delete($where);
+			}
+		} else {
+			foreach ($postsql AS $sql) 
+			{
+				$this->ado('execute',$sql);
+			}
 		}
 
 		foreach ($macros AS $macro) 
@@ -1118,13 +1170,12 @@ class HOMIQ
 			$this->macro($macro);
 		}
 
-
-		/*OLD DB - Z TEGO REZYGNUJE
-		$t=time();
-		$sql="SELECT min(s_queue-$t) AS f,count(*) AS c FROM send WHERE s_queue>$t";
-		parse_str($this->ado('ado_query2url',$sql));
-		if ($c) $this->debug("FUTURE $f, all=$c",DEBUG_BASIC);
-		*/
+		if (!$this->sendmem) {
+			$t=time();
+			$sql="SELECT min(s_queue-$t) AS f,count(*) AS c FROM send WHERE s_queue>$t";
+			parse_str($this->ado('ado_query2url',$sql));
+			if ($c) $this->debug("FUTURE $f, all=$c",DEBUG_BASIC);
+		}
 	}
 
 	function update_macro_stack($t)
@@ -1260,7 +1311,8 @@ class HOMIQ
 								array('s_dst',$m_module),
 								array('s_queue',$t,'>'),
 							);
-							$sql="DELETE FROM send WHERE s_master='$m_master' AND s_top='s' AND s_dst='$m_module' AND s_queue>$t";
+							$sql="DELETE FROM send WHERE s_master='$m_master' AND s_top='s' 
+								AND s_dst='$m_module' AND s_queue>$t";
 							$debug="$m_master;$m_module";
 							if ($o_id) 
 							{
@@ -1276,26 +1328,32 @@ class HOMIQ
 							}
 							
 							$this->debug("Deleting all future $debug",DEBUG_BASIC);	
-							//$this->ado('execute',$sql);
-							$this->send->delete($where);
+							
+							if ($this->sendmem) $this->sendmem->delete($where);
+							else $this->ado('execute',$sql);
 						}
 
 						if ($m_sleep>0 && $o_id)
 						{
-							/*OLD SEND BY DB
-							$q="SELECT count(*) AS ile_takich_samych_komend FROM send WHERE s_master='$m_master' AND s_top='s' AND s_dst='$m_module' AND s_queue>$t AND s_cmd='$m_cmd' AND s_val='$m_val'";
-							parse_str($this->ado('ado_query2url',$q));
-							*/
-							$where=array(
-								array('s_master',$m_master),
-								array('s_top','s'),
-								array('s_dst',$m_module),
-								array('s_queue',$t,'>'),
-								array('s_cmd',$m_cmd),
-								array('s_val',$m_val),
-							);
-							$send=$this->send->select($where);
-							$ile_takich_samych_komend=count($send);
+							
+							if ($this->sendmem) {
+								$where=array(
+									array('s_master',$m_master),
+									array('s_top','s'),
+									array('s_dst',$m_module),
+									array('s_queue',$t,'>'),
+									array('s_cmd',$m_cmd),
+									array('s_val',$m_val),
+								);
+								$send=$this->sendmem->select($where);
+								$ile_takich_samych_komend=count($send);
+							} else {
+								$q="SELECT count(*) AS ile_takich_samych_komend 
+									FROM send WHERE s_master='$m_master' AND s_top='s' 
+									AND s_dst='$m_module' AND s_queue>$t AND 
+									s_cmd='$m_cmd' AND s_val='$m_val'";
+								parse_str($this->ado('ado_query2url',$q));
+							}
 
 							if ($ile_takich_samych_komend)
 							{
@@ -1313,7 +1371,10 @@ class HOMIQ
 
 						if (strlen($m_state)) 
 						{	
-							$sql = $o_id ? "UPDATE outputs SET o_state='$m_state' WHERE o_id=$o_id" : "UPDATE modules SET m_state='$m_state' WHERE m_id=$m_id";
+							$sql = $o_id ? 
+								"UPDATE outputs SET o_state='$m_state' WHERE o_id=$o_id" 
+								: 
+								"UPDATE modules SET m_state='$m_state' WHERE m_id=$m_id";
 
 							//if ($m_sleep==0) $this->ado('execute',$sql);
 							//else $runsql=$sql;
@@ -1420,10 +1481,11 @@ class HOMIQ
 	function cleandb()
 	{
 		$t=time()-12*3600;
-		/*OLD SEND BY DB
-		$sql="DELETE FROM send WHERE s_sent<$t;";
-		$res=$this->ado('execute',$sql);
-		*/
+
+		if (!$this->sendmem) {
+			$sql="DELETE FROM send WHERE s_sent<$t;";
+			$res=$this->ado('execute',$sql);
+		}
 		$sql="DELETE FROM log WHERE l_timestamp<CURRENT_DATE-1";
 		$res=$this->ado('execute',$sql);
 		$sql="DELETE FROM power WHERE p_time<".(time()-60*24*3600);
