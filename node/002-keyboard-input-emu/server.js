@@ -55,18 +55,16 @@ listener.sockets.on('connection', function(httpSocket){
     httpClients.push(httpSocket);
     console.log('cześć kliencie');
    
-    
-    setInterval(function() {
-        httpSocket.emit('date', {'date': new Date()});
-    }, 1000);
+    for (var i=0; i<10; i++) {
+        if (lights[i]==1) httpSocket.emit('light', {light: i, val:1});
+    }  
+  
     
     httpSocket.on('light', function(data){
         var i=parseInt(data);
         var newvalue=1-lights[i];
-        var msg='#S'+i+'.'+newvalue;
+        var msg='#S'+i+'.'+newvalue+'\r\n';
         homiqClient.write(msg);
-        
-        console.log(msg);
     });
     
     httpSocket.on('disconnect', function(){
@@ -96,7 +94,16 @@ homiqClient.on('data', function(data) {
                 var i=parseInt(line.substr(2,1));
                 var newvalue=1-lights[i];
                 var msg='#S'+i+'.'+newvalue;
-                homiqClient.write(msg+'\r\n');
+                homiqClient.write(msg+'\r\n');                
+                break;
+            case 'A':
+                var i=parseInt(line.substr(2,1));
+                var newvalue=parseInt(line.substr(4,1));
+                lights[i]=newvalue;
+                
+                for (var x in httpClients) {
+                    httpClients[x].emit('light', {light: i, val:newvalue});
+                }
                 
                 break;
         }
