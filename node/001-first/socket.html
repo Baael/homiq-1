@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.js"></script>
+  </head>
+  <body>
+    <script>
+        var socket = io.connect();
+        socket.on('message', function(data){
+            console.log(data.message);
+        });
+        socket.on('date', function(data){
+            $('#date').text(data.date);
+        });
+        
+        $(function() {
+            $('#text').keypress(function(e){
+                socket.emit('client_data', {'letter': String.fromCharCode(e.charCode)});
+            });
+        });
+    </script>
+    <div>Działa zajebiście, trzeba przyznać</div>
+    <div id="date"></div>
+    <textarea id="text"></textarea>
+  </body>
+</html>

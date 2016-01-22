@@ -40,6 +40,7 @@ class HOMIQ
 	var $macro_stack=array();
 	var $pkt_id;
 	var $sendmem=null;
+	var $use_schmop=true;
 
 
 
@@ -48,7 +49,7 @@ class HOMIQ
 		$this->debug=$debug;
 		$this->servermode=$server;
 		$this->init('',$server);
-		$this->sendmem=new SCHMOP_DB('send');
+		if ($this->use_schmop) $this->sendmem=new SCHMOP_DB('send');
 	}
 
 	function debug($txt,$state)
@@ -590,7 +591,7 @@ class HOMIQ
 	{
 		$this->child=posix_getpid();
 
-		$this->send=new SCHMOP_DB('send');
+		if ($this->use_schmop) $this->send=new SCHMOP_DB('send');
 		
 		$this->debug("Child $id started",DEBUG_BASIC);
 		$this->ado('close');
@@ -644,9 +645,6 @@ class HOMIQ
 				$s_sql='';
 				
 		
-				/*OLD SEND BY DB
-
-				*/
 
 				if ($this->sendmem) {
 					$send=$this->sendmem->select(array(
@@ -680,7 +678,7 @@ class HOMIQ
 						
 				if (strlen($s_sql)) 
 				{
-					$res=$this->ado('execute',stripslashes($s_sql));
+					$res=$this->ado('execute',stripslashes(stripslashes($s_sql)));
 					$this->debug("running sql after ack: ".stripslashes($s_sql),DEBUG_BASIC);
 				}
 				
@@ -900,7 +898,7 @@ class HOMIQ
 					$this->sendmem->delete($where);
 				}
 			} else {
-				$sql="DELETE FROM send WHERE s_master=$id AND s_sent<".(time()-24*3600);
+				$sql="DELETE FROM send WHERE s_master='$id' AND s_sent<".(time()-24*3600);
 				$res=$this->ado('execute',$sql);
 			}
 		}
