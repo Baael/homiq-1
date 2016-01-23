@@ -3,8 +3,8 @@ var url = require('url');
 var fs = require('fs');
 var io = require('socket.io');
 var net = require('net');
-var ini = require('./ini')
-
+var ini = require('./ini');
+var exec = require('child_process').exec;
 
 var lights=[];
 var httpClients=[];
@@ -36,12 +36,30 @@ var httpServer = http.createServer(function(request, response){
 });
 
 var homiqClient = new net.Socket();
-homiqClient.connect(ini.port, ini.listen, function() {
-	console.log('Connected to homiq');
-    for (var i=0; i<10; i++) {
-        lights[i]=0;
-    }
+
+
+var homiqConnect = homiqClient.connect(ini.port, ini.listen, function() {
+
+    fs.readFile(__dirname + '/server.json', function(error, data){
+        if (error){
+            for (var i=0; i<10; i++) {
+                lights[i]=0;
+            }        }
+        else {
+            lights=JSON.parse(data);
+        }
+    });
+
+    console.log('Connected to homiq');
+
 });
+
+homiqConnect.on('error',function(e) {
+    console.log('Nie ma emulatora, odpal emu.js ;)');
+    process.exit();
+});
+
+
 
 httpServer.listen(ini.http_port);
 console.log('Listening on http://localhost:'+ini.http_port);
@@ -109,5 +127,27 @@ homiqClient.on('data', function(data) {
         }
     }
 });
+
+function hastalavista(options, err) {
+    if (options.cleanup) {
+        fs.writeFileSync(__dirname + '/server.json',JSON.stringify(lights));
+    }
+    if (options.exit) process.exit();
+}
+
+process.on('exit',hastalavista.bind(null,{cleanup:true}));
+process.on('SIGINT',hastalavista.bind(null,{exit:true,cleanup:true}));
+
+
+
+var cmd='ssh -nNT -R '+ini.http_port+':localhost:'+ini.http_port+' '+ini.tunnel_to;
+exec(cmd,function (error, stdout, stderr) {
+    //console.log('stdout: ' + stdout);
+    //console.log('stderr: ' + stderr);
+    if (error !== null) {
+        console.log('exec error: ' + error);
+    }
+});
+
 
 

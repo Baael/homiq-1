@@ -11,11 +11,11 @@ var homiq = net.createServer(function(socket) {
 	
     lastSocket=socket;
     
-    socket.write('Hej dupku\r\n');
+    socket.write('Witaj dupku\r\n');
     
     socket.on('data',function(data){
         var line=data.toString('ascii').trim();
-        console.log(line);
+        //console.log(line);
         
         if (line.substr(0,2)=='#S') {
             var msg='#A'+line.substr(2)+'\r\n';
@@ -43,17 +43,18 @@ homiq.listen(ini.port, ini.listen);
 process.stdin.setRawMode(true);
 process.stdin.resume();
 
-    process.stdin.on('keypress', function (ch, key) {
-        
-        var k=parseInt(ch);
-        if (!isNaN(k) && lastSocket!=null) {
-            lastSocket.write('#I'+k);
-            lastSocket.pipe(lastSocket);
-        }
-        
-        if (key && key.ctrl && key.name == 'c') {
-            console.log('bye');
-            process.exit();
-        }
-    });  
+process.stdin.on('keypress', function (ch, key) {
+	
+	var k=parseInt(ch);
+	if (!isNaN(k) && lastSocket!=null) {
+		lastSocket.write('#I'+k);
+		lastSocket.pipe(lastSocket);
+	}
+	
+	if (key && key.ctrl && key.name == 'c') {
+		console.log('bye');
+		process.exit();
+	}
+});  
 
+console.log('Tu Homiq EMULATOR, klawisze od 1 do 0 do dyspozycji');
