@@ -5,14 +5,44 @@ var io = require('socket.io');
 var net = require('net');
 var ini = require('./ini');
 var ssh = require('./ssh');
+var os = require('os');
 
 var lights=[];
 var httpClients=[];
+var ips=[];
+
+var ifaces = os.networkInterfaces();
+
+Object.keys(ifaces).forEach(function (ifname) {
+  var alias = 0;
+
+  ifaces[ifname].forEach(function (iface) {
+    if ('IPv4' !== iface.family || iface.internal !== false) {
+      return;
+    }
+
+    ips.push(iface.address);
+    
+    /*
+    if (alias >= 1) {
+      console.log(ifname + ':' + alias, iface.address);
+    } else {
+      console.log(ifname, iface.address);
+    }
+    ++alias;
+    */
+  });
+});
+
 
 var httpServer = http.createServer(function(request, response){
     var path = url.parse(request.url).pathname;
-
+    
     switch(path){
+        case '/check-homiq-web':
+            response.writeHead(200, {"Content-Type": "text/html","Access-Control-Allow-Origin": "*"});
+            response.write('OK', "utf8");
+            response.end();            
         case '/':
             fs.readFile(__dirname + '/index.html', function(error, data){
                 if (error){
@@ -65,13 +95,12 @@ httpServer.listen(ini.http_port);
 console.log('Listening on http://localhost:'+ini.http_port);
 
 
-
-
-
 var listener = io.listen(httpServer);
 listener.sockets.on('connection', function(httpSocket){
     httpClients.push(httpSocket);
     console.log('Hello web client:', httpSocket.handshake.address);
+   
+   httpSocket.emit('web', {ips: ips, port:ini.http_port});
    
     for (var i=0; i<10; i++) {
         if (lights[i]==1) httpSocket.emit('light', {light: i, val:1});
@@ -93,7 +122,7 @@ listener.sockets.on('connection', function(httpSocket){
              }
         }
 
-        console.log('narka kliencie');
+        console.log('See you later client');
     });  
     
 });
