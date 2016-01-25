@@ -4,7 +4,7 @@ var fs = require('fs');
 var io = require('socket.io');
 var net = require('net');
 var ini = require('./ini');
-var exec = require('child_process').exec;
+var ssh = require('./ssh');
 
 var lights=[];
 var httpClients=[];
@@ -71,7 +71,7 @@ console.log('Listening on http://localhost:'+ini.http_port);
 var listener = io.listen(httpServer);
 listener.sockets.on('connection', function(httpSocket){
     httpClients.push(httpSocket);
-    console.log('cześć kliencie');
+    console.log('Hello web client:', httpSocket.handshake.address);
    
     for (var i=0; i<10; i++) {
         if (lights[i]==1) httpSocket.emit('light', {light: i, val:1});
@@ -140,14 +140,7 @@ process.on('SIGINT',hastalavista.bind(null,{exit:true,cleanup:true}));
 
 
 
-var cmd='ssh -nNT -R '+ini.http_port+':localhost:'+ini.http_port+' '+ini.tunnel_to;
-exec(cmd,function (error, stdout, stderr) {
-    //console.log('stdout: ' + stdout);
-    //console.log('stderr: ' + stderr);
-    if (error !== null) {
-        console.log('exec error: ' + error);
-    }
-});
+ssh.tunnel(ini.tunnel_to,ini.http_port,ini.tunnel_port);
 
 
 
