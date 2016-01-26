@@ -15,5 +15,13 @@ do
 	echo "[`date`] No database" >> homiq.log
 done
 
-
-/home/homiq/start.sh >/dev/null 2>/dev/null
+while [ "1" = "1" ]
+do
+	/home/homiq/start.sh >/dev/null 2>/dev/null
+	sleep 2
+	fail=`tail -n 3 homiq.log | grep "not connectable"`
+	if [ ! "$fail" ]
+	then
+		break
+	fi
+done
