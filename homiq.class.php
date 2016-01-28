@@ -217,44 +217,49 @@ class HOMIQ
 		{
 			$this->s[$id]=socket_create(AF_INET,SOCK_STREAM,SOL_TCP);
 
-			if (@socket_connect($this->s[$id],$m['host'],$m['port']))
+			while (true)
 			{
-				$this->debug('Master '.$m['id'].' connected',DEBUG_BASIC);
-
-				$anymasterisalife=true;
-				$fork=pcntl_fork();
-				if ($fork) 
+				if (@socket_connect($this->s[$id],$m['host'],$m['port']))
 				{
-					$this->masters[$id]['child']=$fork;
-
-
-					if ($this->sendmem) {
-						$send=$this->sendmem->select(array(
-							array('s_sent',0,'>'),
-							array('s_pkt',1,'>'),
-							array('s_master','$id'),
-							)
-						);
-						if (count($send))
-						{
-							$k=max(array_keys($send));
-							if (isset($send[$k]['s_pkt'])) $this->pkt_id[$id]=$send[$k]['s_pkt'];
+					$this->debug('Master '.$m['id'].' connected',DEBUG_BASIC);
+	
+					$anymasterisalife=true;
+					$fork=pcntl_fork();
+					if ($fork) 
+					{
+						$this->masters[$id]['child']=$fork;
+	
+	
+						if ($this->sendmem) {
+							$send=$this->sendmem->select(array(
+								array('s_sent',0,'>'),
+								array('s_pkt',1,'>'),
+								array('s_master','$id'),
+								)
+							);
+							if (count($send))
+							{
+								$k=max(array_keys($send));
+								if (isset($send[$k]['s_pkt'])) $this->pkt_id[$id]=$send[$k]['s_pkt'];
+							}
+	
+						} else {
+							$sql="SELECT s_pkt FROM send WHERE s_sent>0 AND s_pkt>1 AND s_master='$id' ORDER BY s_id DESC LIMIT 1";
+							parse_str($this->ado('ado_query2url',$sql));
+							$this->pkt_id[$id]=$s_pkt;
 						}
-
-					} else {
-						$sql="SELECT s_pkt FROM send WHERE s_sent>0 AND s_pkt>1 AND s_master='$id' ORDER BY s_id DESC LIMIT 1";
-						parse_str($this->ado('ado_query2url',$sql));
-						$this->pkt_id[$id]=$s_pkt;
+	
+	
 					}
-
-
+					else $this->reader($id);
+					
+					break;
 				}
-				else $this->reader($id);
-				 
-			}
-			else
-			{
-				$this->debug('Master '.$m['id']. ' is not connectable',DEBUG_BASIC);
+				else
+				{
+					$this->debug('Master '.$m['id']. ' is not connectable',DEBUG_BASIC);
+					sleep(5);
+				}
 			}
 		}
 
