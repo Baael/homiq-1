@@ -1,5 +1,5 @@
 module.exports = {
-    port: 4001,
+    port: 5007,
     listen: '127.0.0.1',
     http_port: 8002,
     tunnel_to: 'homiq@homiq.webkameleon.com',

@@ -19,14 +19,6 @@ module.exports = {
             
             console.log('stderr:',stderr.trim());
         
-            
-            
-            /*
-            console.log('stdout: ' + stdout);
-            if (error !== null) {
-                console.log('exec error: ' + error);
-            }
-            */
         });    
     }
 }
