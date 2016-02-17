@@ -100,7 +100,7 @@ listener.sockets.on('connection', function(httpSocket){
     httpClients.push(httpSocket);
     console.log('Hello web client:', httpSocket.handshake.address);
    
-   httpSocket.emit('web', {ips: ips, port:ini.http_port});
+    httpSocket.emit('web', {ips: ips, port:ini.http_port});
    
     for (var i=0; i<10; i++) {
         if (lights[i]==1) httpSocket.emit('light', {light: i, val:1});

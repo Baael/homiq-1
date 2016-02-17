@@ -1,0 +1,87 @@
+{
+    "devices": [
+        {
+            "id": "HQE",
+            "name": "Homiq Emulator",
+            "protocol": "tcp",
+            "language": "homiq-emu-test",
+            "com":{
+                "host": "127.0.0.1",
+                "port": "5007",
+                "latency": 20
+            }
+        }
+    ],
+    "inputs": [
+        {
+            "id": "I0",
+            "address": "0",
+            "device": "HQE",
+            "name": "Switch 10",
+            "type": "HI"
+        },
+        {
+            "id": "I1",
+            "address": "1",
+            "device": "HQE",
+            "name": "Switch 1",
+            "type": "HI"
+        },
+        {
+            "id": "I2",
+            "address": "02",
+            "device": "HQE",
+            "name": "Switch 2",
+            "type": "HI"
+        },
+        {
+            "id": "I3",
+            "address": "3",
+            "device": "HQE",
+            "name": "Switch 3",
+            "type": "HI"
+        },
+        {
+            "id": "I4",
+            "address": "4",
+            "device": "HQE",
+            "name": "Switch 4",
+            "type": "HI"
+        },
+        {
+            "id": "I5",
+            "address": "5",
+            "device": "HQE",
+            "name": "Switch 5",
+            "type": "HI"
+        },
+        {
+            "id": "I6",
+            "address": "6",
+            "device": "HQE",
+            "name": "Switch 6",
+            "type": "HI"
+        },
+        {
+            "id": "I7",
+            "address": "7",
+            "device": "HQE",
+            "name": "Switch 7",
+            "type": "HI"
+        },
+        {
+            "id": "I8",
+            "address": "8",
+            "device": "HQE",
+            "name": "Switch 8",
+            "type": "HI"
+        },
+        {
+            "id": "I9",
+            "address": "9",
+            "device": "HQE",
+            "name": "Switch 9",
+            "type": "HI"
+        }
+    ]
+}
