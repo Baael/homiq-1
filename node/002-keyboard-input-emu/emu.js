@@ -19,7 +19,7 @@ var homiq = net.createServer(function(socket) {
         console.log('Request:',line);
         
         if (line.substr(0,2)=='#S') {
-            var msg='#A'+line.substr(2,3)+'\r\n';
+            var msg='#A'+line.substr(2)+'\r\n';
             socket.write(msg);
             console.log('Reply:',msg.trim());
         }

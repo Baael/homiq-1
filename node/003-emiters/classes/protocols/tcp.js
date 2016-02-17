@@ -62,21 +62,22 @@ var Tcp = function(options,logger) {
     });
     
     return {
-        'connect': function() {
+        connect: function() {
             connect();
         },
-        'disconnect': function() {
+        disconnect: function() {
             connected=false;
             client.end();
             
         },
-        'on': function(event,fun) {
+        on: function(event,fun) {
             self.on(event,fun);
         },
         
-        'send': function(str) {
+        send: function(str) {
             sendQueue.push(str);
             send();
+            return connected;
         }
     }
 }
