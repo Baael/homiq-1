@@ -1,0 +1,336 @@
+[
+    {
+        "name": "Turn on light 1",
+        "id": "ON1",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "1",
+                "command": "turnon"
+            }
+        ]
+    },
+    {
+        "name": "Turn on light 2",
+        "id": "ON2",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "2",
+                "command": "turnon"
+            }
+        ]
+    },
+    {
+        "name": "Turn on light 3",
+        "id": "ON3",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "3",
+                "command": "turnon"
+            }
+        ]
+    },
+    {
+        "name": "Turn on light 4",
+        "id": "ON4",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "4",
+                "command": "turnon"
+            }
+        ]
+    },
+    {
+        "name": "Turn on light 5",
+        "id": "ON5",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "5",
+                "command": "turnon"
+            }
+        ]
+    },
+    {
+        "name": "Turn on light 6",
+        "id": "ON6",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "6",
+                "command": "turnon"
+            }
+        ]
+    },
+    {
+        "name": "Turn on light 7",
+        "id": "ON7",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "7",
+                "command": "turnon"
+            }
+        ]
+    },
+    {
+        "name": "Turn on light 8",
+        "id": "ON8",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "8",
+                "command": "turnon"
+            }
+        ]
+    },
+    {
+        "name": "Turn on light 9",
+        "id": "ON9",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "9",
+                "command": "turnon"
+            }
+        ]
+    },
+    {
+        "name": "Turn on all light ",
+        "id": "ON-ALL",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "0",
+                "command": "turnon"
+            },
+            {
+                "device": "HQE",
+                "address": "1",
+                "delay" : 1,
+                "command": "turnon"
+            },
+            {
+                "device": "HQE",
+                "address": "2",
+                "delay" : 2,
+                "command": "turnon"
+            },
+            {
+                "device": "HQE",
+                "address": "3",
+                "delay" : 3,
+                "command": "turnon"
+            },
+            {
+                "device": "HQE",
+                "address": "4",
+                "delay" : 4,
+                "command": "turnon"
+            },
+            {
+                "device": "HQE",
+                "address": "5",
+                "delay" : 5,
+                "command": "turnon"
+            },
+            {
+                "device": "HQE",
+                "address": "6",
+                "delay" : 6,
+                "command": "turnon"
+            },
+            {
+                "device": "HQE",
+                "address": "7",
+                "delay" : 7,
+                "command": "turnon"
+            },
+            {
+                "device": "HQE",
+                "address": "8",
+                "delay" : 8,
+                "command": "turnon"
+            },
+            {
+                "device": "HQE",
+                "address": "9",
+                "delay" : 9,
+                "command": "turnon"
+            }
+        ]
+    },
+    {
+        "name": "Turn off light 1",
+        "id": "OFF1",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "1",
+                "command": "turnoff"
+            }
+        ]
+    },
+    {
+        "name": "Turn off light 2",
+        "id": "OFF2",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "2",
+                "command": "turnoff"
+            }
+        ]
+    },
+    {
+        "name": "Turn off light 3",
+        "id": "OFF3",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "3",
+                "command": "turnoff"
+            }
+        ]
+    },
+    {
+        "name": "Turn off light 4",
+        "id": "OFF4",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "4",
+                "command": "turnoff"
+            }
+        ]
+    },
+    {
+        "name": "Turn off light 5",
+        "id": "OFF5",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "5",
+                "command": "turnoff"
+            }
+        ]
+    },
+    {
+        "name": "Turn off light 6",
+        "id": "OFF6",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "6",
+                "command": "turnoff"
+            }
+        ]
+    },
+    {
+        "name": "Turn off light 7",
+        "id": "OFF7",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "7",
+                "command": "turnoff"
+            }
+        ]
+    },
+    {
+        "name": "Turn off light 8",
+        "id": "OFF8",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "8",
+                "command": "turnoff"
+            }
+        ]
+    },
+    {
+        "name": "Turn off light 9",
+        "id": "OFF9",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "9",
+                "command": "turnoff"
+            }
+        ]
+    },
+    {
+        "name": "Turn off light 0",
+        "id": "OFF0",
+        "conditions":[],
+        "actions": [
+            {
+                "device": "HQE",
+                "address": "0",
+                "command": "turnoff"
+            }
+        ],
+        "scenarios" : [
+            {
+                "scenario": "OFF1",
+                "delay": 1
+            },
+            {
+                "scenario": "OFF2",
+                "delay": 2
+            },
+            {
+                "scenario": "OFF3",
+                "delay": 3
+            },
+            {
+                "scenario": "OFF4",
+                "delay": 4
+            },
+            {
+                "scenario": "OFF5",
+                "delay": 5
+            },
+            {
+                "scenario": "OFF6",
+                "delay": 6
+            },
+            {
+                "scenario": "OFF7",
+                "delay": 7
+            },
+            {
+                "scenario": "OFF8",
+                "delay": 8
+            },
+            {
+                "scenario": "OFF9",
+                "delay": 9
+            }
+        ]
+    }
+
+
+]

@@ -11,7 +11,7 @@ var Device = function(protocol,language,options,logger) {
     
     var com=new Protocol(options,logger);
     var trans=new Translator(com,logger,function(type,data){
-        self.emit(type,data);
+        self.emit('data',type,data);
     });
     
     com.on('data',function(data) {

@@ -11,7 +11,7 @@ module.exports = function(com,logger,callback) {
         now=Date.now()/1000;
         
         if (str!=null) {
-            sendQueue.push({str: str, sent: 0, count: 0, when:now+delay});
+            sendQueue.push({str: str, sent: 0, count: 0, when:now+parseFloat(delay)});
         }
         
         if (sendSemaphore) {
@@ -73,7 +73,7 @@ module.exports = function(com,logger,callback) {
                         break;
                     }
                 }
-                var opt={address:adr,state:val};
+                var opt={address:adr,state:val,logicalstate:val==1?'on':'off'};
                 callback('output',opt);
                 
             } else {

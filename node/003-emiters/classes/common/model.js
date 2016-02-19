@@ -27,6 +27,7 @@ var Model = function(file,index,logger) {
         for (var k in data) d.push(data[k]);
         
         fs.writeFile(file,d,function() {
+            logger.log("Saving "+file,'db');
             saveState=false;
         });
     }
@@ -34,7 +35,9 @@ var Model = function(file,index,logger) {
     
     return {
         init: function () {
-            fs.readFile(file,function(error,d) {    
+            
+            fs.readFile(file,function(error,d) {
+                logger.log("Opening "+file,'db');
                 try {
                     var json = JSON.parse(d);
                     
@@ -50,8 +53,13 @@ var Model = function(file,index,logger) {
             
         },
         
-        set: function(idx,d) {
-            if (typeof(data[idx]=='undefined')) return;
+        set: function(d,idx) {
+            if (idx==null) {
+                idx=createIndex(d);
+            }
+    
+            if (typeof(data[idx])=='undefined') return;
+            
             for (var k in d) {
                 data[idx][k]=d[k];
             }

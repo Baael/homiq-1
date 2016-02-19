@@ -1,0 +1,46 @@
+[
+    {
+        "device": "HQE",
+        "address": "1",
+        "actions" : [
+            {
+                "conditions": [
+                    {
+                        "type": "output",
+                        "device": "HQE",
+                        "address": "1",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "OFF1"
+                    }
+                ]
+            },
+            {
+                "conditions": [
+                    {
+                        "type": "output",
+                        "device": "HQE",
+                        "address": "1",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "off"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "ON1"
+                    }
+                ]
+            }
+        ]
+    }
+]
