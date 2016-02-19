@@ -29,8 +29,9 @@ var Model = function(file,index,logger) {
         var bak=file+'.bak';
         fs.renameSync(file, bak);
         fs.writeFile(file,JSON.stringify(d),function() {
-            logger.log("Saving "+file,'db');
+            logger.log("Saved "+file,'db');
             fs.unlink(bak);
+            lastSave=Date.now();
             saveState=false;
         });
     }
@@ -72,12 +73,15 @@ var Model = function(file,index,logger) {
             if (idx==null) {
                 idx=createIndex(d);
             }
-    
-            if (typeof(data[idx])=='undefined') return;
             
+            if (typeof(data[idx])=='undefined') {
+                logger.log("Index "+idx+" could not be found",'error');
+                return;
+            }
             for (var k in d) {
                 data[idx][k]=d[k];
             }
+            
             lastSet=Date.now();
         },
         
@@ -91,6 +95,7 @@ var Model = function(file,index,logger) {
 
 var saveModel=function() {
     for (var k in instances) instances[k].save();
+    setTimeout(saveModel,1000);
 }
 
 setTimeout(saveModel,1000);

@@ -36,7 +36,7 @@ process.on('SIGHUP',function () {
             logger.log('Initializing '+structureData.devices[i].name,'init');
             devices[id] = new Device(structureData.devices[i].protocol,structureData.devices[i].language,structureData.devices[i].com,logger);
             devices[id].connect();
-            devices[id].on('data',function(type,data){
+            devices[id].on('data',function(type,data) {
                 logic.action(id,type,data);
             });
             scenario.on(id,function(d) {

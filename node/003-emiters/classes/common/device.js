@@ -10,7 +10,8 @@ var Device = function(protocol,language,options,logger) {
     
     
     var com=new Protocol(options,logger);
-    var trans=new Translator(com,logger,function(type,data){
+    var trans=new Translator(com,logger,function(type,data) {
+        logger.log("Device notification "+type,'emiter');
         self.emit('data',type,data);
     });
     
@@ -18,6 +19,9 @@ var Device = function(protocol,language,options,logger) {
         trans.data(data);
     });
     
+    com.on('request',function(request,response) {
+        trans.request(request,response);
+    });
   
     
     return {
