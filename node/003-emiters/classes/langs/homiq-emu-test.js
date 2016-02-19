@@ -26,7 +26,7 @@ module.exports = function(com,logger,callback) {
             if ( now-sendQueue[i].sent<attempt_delay) continue;
             if ( sendQueue[i].count>=attempts) continue;
                 
-            var msg=sendQueue[i].str+'.'+(++counter);
+            var msg=sendQueue[i].str+'.'+(++counter%255);
             var res=com.send(msg);
             if (!res) sendQueue[i].when=now+10;
             sendQueue[i].count++;

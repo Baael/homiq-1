@@ -109,7 +109,7 @@
     },
     {
         "name": "Turn on all light ",
-        "id": "ON-ALL",
+        "id": "ON0",
         "conditions":[],
         "actions": [
             {
@@ -282,7 +282,7 @@
         ]
     },
     {
-        "name": "Turn off light 0",
+        "name": "Turn off all light ",
         "id": "OFF0",
         "conditions":[],
         "actions": [

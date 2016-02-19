@@ -1,6 +1,8 @@
 var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 
+var condition=require('./condition');
+
 var Scenario=function(logger) {
     var self=this;
     var db;
@@ -11,15 +13,29 @@ var Scenario=function(logger) {
     var runscenarios=function() {
         if (scenariosQueue.length==0) return;
         if (scenariosSemaphore) return;
+        
         scenariosSemaphore=true;
         
         for (var i=0;i<scenariosQueue.length;i++) {
             if (scenariosQueue[i].when<=Date.now()) {
-                logger.log(scenariosQueue[i].scenario.name,'scenario');
-                for(var j=0;j<scenariosQueue[i].scenario.actions.length;j++) {
-                    
-                    self.emit(scenariosQueue[i].scenario.actions[j].device,scenariosQueue[i].scenario.actions[j]);
+                
+                var pass=true;
+                
+                if (typeof(scenariosQueue[i].scenario.conditions)=='object') {
+                    for (var j=0; j<scenariosQueue[i].scenario.conditions.length; j++) {
+                        pass*=condition(db,scenariosQueue[i].scenario.conditions[j]);
+                        if (!pass) break;
+                    }                    
                 }
+                
+                if (pass) {
+                    logger.log(scenariosQueue[i].scenario.name,'scenario');
+                    for(var j=0;j<scenariosQueue[i].scenario.actions.length;j++) {
+                        
+                        self.emit(scenariosQueue[i].scenario.actions[j].device,scenariosQueue[i].scenario.actions[j]);
+                    }
+                }
+                
                 scenariosQueue.splice(i,1);
                 scenariosSemaphore=false;
                 setTimeout(runscenarios,1);
