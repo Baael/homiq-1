@@ -18,10 +18,7 @@ var Device = function(protocol,language,options,logger) {
         trans.data(data);
     });
     
-    //com.send('#S3.1.35');
-    //com.send('#S2.0.36');
-    trans.turnon({address:4});
-    
+  
     
     return {
         diconnect: function () {
@@ -36,7 +33,11 @@ var Device = function(protocol,language,options,logger) {
             self.on(event,fun);
         },
         
-        
+        command: function(data) {
+            if (typeof(data.command)=='string') {
+                if (typeof(trans[data.command])=='function') trans[data.command](data);
+            }
+        }
     }
 }
 

@@ -62,6 +62,7 @@ module.exports = function(com,logger,callback) {
             send(cmd,delay);
         },
         'data': function(data) {
+            logger.log('Received: '+data,'frame');
             
             if (data.substr(0,2)=='#A') {
                 var adr=data.substr(2,1);
@@ -83,7 +84,7 @@ module.exports = function(com,logger,callback) {
             } else {
                 logger.log('Unknown input data: '+data,'error');
             }
-            logger.log('Received: '+data,'frame');
+            
         }
     }
     

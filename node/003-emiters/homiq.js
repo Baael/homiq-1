@@ -15,6 +15,11 @@ var logic = new Logic(scenario,logger);
 var structureData;
 var devices={};
 
+/*
+ * overall init may be initiated by signal HUP
+ * therefore afterward we push (kill) the HUP signal to ourselves
+ */
+
 process.on('SIGHUP',function () {
     var data=structure.get();
     if (typeof(data)=='object') {
@@ -34,12 +39,19 @@ process.on('SIGHUP',function () {
             devices[id].on('data',function(type,data){
                 logic.action(id,type,data);
             });
+            scenario.on(id,function(d) {
+                devices[id].command(d);
+            });
         }
     }   
 });
+
 process.kill(process.pid, 'SIGHUP');
 fs.writeFile(__dirname+'/homiq.pid',process.pid);
 
-setTimeout(function() {}, 100)
+/*
+ * wait before everything starts
+ */
+setTimeout(function() {}, 1000);
 
 
