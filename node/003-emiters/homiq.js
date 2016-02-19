@@ -4,11 +4,13 @@ var Structure = require('./classes/common/structure');
 var Logger = require('./classes/common/logger');
 var Device = require('./classes/common/device');
 var Logic = require('./classes/common/logic');
+var Scenario = require('./classes/common/scenario');
 
 
 var logger = new Logger('./logs');
 var structure = new Structure(__dirname + '/conf/structure.json',logger);
-var logic = new Logic(logger);
+var scenario = new Scenario(logger);
+var logic = new Logic(scenario,logger);
 
 var structureData;
 var devices={};
@@ -18,6 +20,7 @@ process.on('SIGHUP',function () {
     if (typeof(data)=='object') {
         structureData=data;
         
+        scenario.setdb(structure.db);
         logic.setdb(structure.db);
         
         for(var i=0; i<structureData.devices.length; i++) {

@@ -76,8 +76,12 @@ module.exports = function(com,logger,callback) {
                 var opt={address:adr,state:val,logicalstate:val==1?'on':'off'};
                 callback('output',opt);
                 
-            } else {
+            } else if (data.substr(0,2)=='#I') {
+                var adr=data.substr(2,1);
+                callback('input',{address: adr});
                 
+            } else {
+                logger.log('Unknown input data: '+data,'error');
             }
             logger.log('Received: '+data,'frame');
         }

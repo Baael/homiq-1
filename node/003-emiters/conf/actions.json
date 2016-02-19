@@ -6,7 +6,7 @@
             {
                 "conditions": [
                     {
-                        "type": "output",
+                        "db": "outputs",
                         "device": "HQE",
                         "address": "1",
                         "condition": [
@@ -25,13 +25,13 @@
             {
                 "conditions": [
                     {
-                        "type": "output",
+                        "db": "outputs",
                         "device": "HQE",
                         "address": "1",
                         "condition": [
                             "logicalstate",
-                            "=",
-                            "off"
+                            "!=",
+                            "on"
                         ]
                     }
                 ],
