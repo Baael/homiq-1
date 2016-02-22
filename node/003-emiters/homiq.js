@@ -38,6 +38,11 @@ process.on('SIGHUP',function () {
             
             devices[id].on('data',function(id,type,data) {
                 logic.action(id,type,data);
+                for (var id2 in devices) {
+                    if (id!=id2) {
+                        devices[id2].notify(type,data);
+                    }
+                }
             });
             
             devices[id].on('connection',function(id,data) {

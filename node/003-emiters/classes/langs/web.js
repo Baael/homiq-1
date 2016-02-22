@@ -13,6 +13,12 @@ var Web = function(com,logger,callback) {
         }
     });
     
+    com.on('notify',function(sockets,type,data) {        
+        for (var i=0;i<sockets.length; i++) {
+            sockets[i].emit(type, data);
+        }
+    });
+    
     return {
         //Web router
         'request': function(request,response) {
@@ -50,8 +56,8 @@ var Web = function(com,logger,callback) {
         },
         
         'data': function(data) {
-          
-            console.log('Z weba przyszlo',data);
+            logger.log('Click '+data,'web');
+            callback('input',{address: data});
         },
         
 

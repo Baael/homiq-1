@@ -69,7 +69,13 @@ var Httpd = function(options,logger) {
 
         initstate: function(socket,db) {
             self.emit('initstate',socket,db);
-        }        
+        },
+        
+        notify: function(type,data) {
+            self.emit('notify',httpClients,type,data);
+    
+        }
+        
 
     }
 }

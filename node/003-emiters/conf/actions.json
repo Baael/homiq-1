@@ -438,6 +438,450 @@
                 ]
             }
         ]
+    },
+    
+    
+    
+    {
+        "device": "WEB",
+        "address": "0",
+        "actions" : [
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "0",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "OFF0"
+                    }
+                ]
+            },
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "0",
+                        "condition": [
+                            "logicalstate",
+                            "!=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "ON0"
+                    }
+                ]
+            }
+        ]
+    },    
+    {
+        "device": "WEB",
+        "address": "1",
+        "actions" : [
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "1",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "OFF1"
+                    }
+                ]
+            },
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "1",
+                        "condition": [
+                            "logicalstate",
+                            "!=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "ON1"
+                    }
+                ]
+            }
+        ]
+    },    
+    {
+        "device": "WEB",
+        "address": "2",
+        "actions" : [
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "2",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "OFF2"
+                    }
+                ]
+            },
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "2",
+                        "condition": [
+                            "logicalstate",
+                            "!=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "ON2"
+                    }
+                ]
+            }
+        ]
+    },    
+    {
+        "device": "WEB",
+        "address": "3",
+        "actions" : [
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "3",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "OFF3"
+                    }
+                ]
+            },
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "3",
+                        "condition": [
+                            "logicalstate",
+                            "!=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "ON3"
+                    }
+                ]
+            }
+        ]
+    },    
+    {
+        "device": "WEB",
+        "address": "4",
+        "actions" : [
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "4",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "OFF4"
+                    }
+                ]
+            },
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "4",
+                        "condition": [
+                            "logicalstate",
+                            "!=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "ON4"
+                    }
+                ]
+            }
+        ]
+    },    
+    {
+        "device": "WEB",
+        "address": "5",
+        "actions" : [
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "5",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "OFF5"
+                    }
+                ]
+            },
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "5",
+                        "condition": [
+                            "logicalstate",
+                            "!=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "ON5"
+                    }
+                ]
+            }
+        ]
+    },    
+    {
+        "device": "WEB",
+        "address": "6",
+        "actions" : [
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "6",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "OFF6"
+                    }
+                ]
+            },
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "6",
+                        "condition": [
+                            "logicalstate",
+                            "!=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "ON6"
+                    }
+                ]
+            }
+        ]
+    },    
+    {
+        "device": "WEB",
+        "address": "7",
+        "actions" : [
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "7",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "OFF7"
+                    }
+                ]
+            },
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "7",
+                        "condition": [
+                            "logicalstate",
+                            "!=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "ON7"
+                    }
+                ]
+            }
+        ]
+    },    
+    {
+        "device": "WEB",
+        "address": "8",
+        "actions" : [
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "8",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "OFF8"
+                    }
+                ]
+            },
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "8",
+                        "condition": [
+                            "logicalstate",
+                            "!=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "ON8"
+                    }
+                ]
+            }
+        ]
+    },    
+    {
+        "device": "WEB",
+        "address": "9",
+        "actions" : [
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "9",
+                        "condition": [
+                            "logicalstate",
+                            "=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "OFF9"
+                    }
+                ]
+            },
+            {
+                "conditions": [
+                    {
+                        "db": "outputs",
+                        "device": "HQE",
+                        "address": "9",
+                        "condition": [
+                            "logicalstate",
+                            "!=",
+                            "on"
+                        ]
+                    }
+                ],
+                "scenarios" : [
+                    {
+                        "scenario": "ON9"
+                    }
+                ]
+            }
+        ]
     }
+    
     
 ]

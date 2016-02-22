@@ -82,11 +82,17 @@ var Model = function(file,index,logger) {
                 logger.log("Index "+idx+" could not be found",'error');
                 return;
             }
+            var anythingChanged=false;
+            
             for (var k in d) {
-                data[idx][k]=d[k];
+                if (typeof(data[idx][k])=='undefined' || data[idx][k]!=d[k]) {
+                    data[idx][k]=d[k];
+                    anythingChanged=true;
+                }
+                
             }
             
-            lastSet=Date.now();
+            if (anythingChanged) lastSet=Date.now();
         },
         
         index: function(data) {

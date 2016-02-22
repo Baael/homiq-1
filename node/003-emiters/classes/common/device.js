@@ -11,7 +11,7 @@ var Device = function(id,protocol,language,options,logger) {
     
     var com=new Protocol(options,logger);
     var trans=new Translator(com,logger,function(type,data) {
-        logger.log("Device notification "+type,'emiter');
+        
         self.emit('data',id,type,data);
     });
     
@@ -48,7 +48,11 @@ var Device = function(id,protocol,language,options,logger) {
         },
         
         initstate: function(socket,db) {
-            com.initstate(socket,db);
+            if (typeof(com.initstate)=='function') com.initstate(socket,db);
+        },
+        
+        notify: function(type,data) {
+            if (typeof(com.notify)=='function') com.notify(type,data);
         }
     }
 }

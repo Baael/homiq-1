@@ -49,6 +49,51 @@ var Scenario=function(logger) {
         setTimeout(runscenarios,1000);
     }
     
+    var run = function(scenario,delay) {
+        if (delay==null) delay=0;
+        
+        /*
+         *check if scenario is object and has delay defined
+         */
+        if (typeof(scenario)=='object' && typeof(scenario.scenario)=='string') {
+            if (typeof(scenario.delay)!='undefined') {
+                delay+=parseFloat(scenario.delay);
+            }
+            scenario=scenario.scenario;
+        }
+        
+        /*
+         *get database for specified scenario id
+         */
+        scenario=db.scenarios.get(scenario);
+        if (typeof(scenario)!='object') return;
+        
+        /*
+         *queue scenario
+         */
+        var when=Date.now()+1000*delay;
+        
+        scenariosQueue.push({
+            when: when,
+            scenario: scenario
+        });
+        
+        /*
+         *run queue
+         */
+        runscenarios();
+        
+        /*
+         *run subscenarios
+         */
+        if (typeof(scenario.scenarios)=='object' ) {
+            for (var i=0;i<scenario.scenarios.length;i++) {
+                run(scenario.scenarios[i],delay)
+            }
+        }
+        
+    } 
+    
     
     
     return {
@@ -61,46 +106,7 @@ var Scenario=function(logger) {
         },
         
         run: function(scenario,delay) {
-            if (delay==null) delay=0;
-            
-            /*
-             *check if scenario is object and has delay defined
-             */
-            if (typeof(scenario)=='object' && typeof(scenario.scenario)=='string') {
-                if (typeof(scenario.delay)!='undefined') {
-                    delay+=parseFloat(scenario.delay);
-                }
-                scenario=scenario.scenario;
-            }
-            
-            /*
-             *get database for specified scenario id
-             */
-            scenario=db.scenarios.get(scenario);
-            if (typeof(scenario)!='object') return;
-            
-            /*
-             *queue scenario
-             */
-            scenariosQueue.push({
-                when: Date.now()+delay,
-                scenario: scenario
-            });
-            
-            /*
-             *run queue
-             */
-            runscenarios();
-            
-            /*
-             *run subscenarios
-             */
-            if (typeof(scenario.scenarios)=='object' ) {
-                for (var i=0;i<scenario.scenarios.length;i++) {
-                    run(scenario.scenarios[i],delay)
-                }
-            }
-            
+            run(scenario,delay);
         }
     }
     
