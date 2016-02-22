@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>HomiQ</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <style>
+      .row {
+        padding-top: 10px;
+      }
+      .row div {
+        text-align: center;
+        font-size: 24px;
+        border: 2px dashed #000;
+        height: 80px;
+        padding-top: 22px;
+        cursor: pointer;
+      }
+      
+      .light {
+        background-color: #ff0;
+      }
+      
+      iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+        var socket = io.connect();
+
+        socket.on('output', function(data){
+            if (data.logicalstate=='on') $('.L'+data.address).addClass('light');
+            else $('.L'+data.address).removeClass('light');
+        });
+        
+        socket.on('web',function(web) {
+          var host=location.hostname;
+          if (host.indexOf('homiq')>=0) {
+            for (i=0;i<web.ips.length;i++) {
+              var url='http://'+web.ips[i]+':'+web.port;
+              $.get(url+'/check-homiq-web',function (data) {
+                if (data=='OK') {
+                    $('body').html('<iframe src="'+url+'"></iframe>');
+                }
+              });
+              
+            }
+          }
+          
+        });
+        
+        $(function() {
+            $('.row div').click(function (e){
+              socket.emit('input', $(this).text());
+            });
+
+        });
+    </script>
+    
+    <div class="container">
+      
+      <div class="row">
+        <div class="L1 col-md-1 col-sm-3 col-xs-4">1</div>
+        <div class="L2 col-md-1 col-sm-3 col-xs-4">2</div>
+        <div class="L3 col-md-1 col-sm-3 col-xs-4">3</div>
+        <div class="L4 col-md-1 col-sm-3 col-xs-4">4</div>
+        <div class="L5 col-md-1 col-sm-3 col-xs-4">5</div>
+        <div class="L6 col-md-1 col-sm-3 col-xs-4">6</div>
+        <div class="L7 col-md-1 col-sm-3 col-xs-4">7</div>
+        <div class="L8 col-md-1 col-sm-3 col-xs-4">8</div>
+        <div class="L9 col-md-1 col-sm-3 col-xs-4">9</div>
+        <div class="L0 col-md-1 col-sm-3 col-xs-4">0</div>
+        
+      </div>
+      
+    </div>
+    
+  </body>
+</html>

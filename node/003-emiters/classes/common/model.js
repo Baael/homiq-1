@@ -60,6 +60,10 @@ var Model = function(file,index,logger) {
             
         },
         
+        getAll: function() {
+            return data;    
+        },
+        
         get: function(idx) {
             if (typeof(idx)=='object') {
                 idx=createIndex(idx);

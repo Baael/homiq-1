@@ -2,7 +2,7 @@ var util = require('util');
 var EventEmitter = require('events').EventEmitter;
 
 
-var Device = function(protocol,language,options,logger) {
+var Device = function(id,protocol,language,options,logger) {
     var self=this;
     
     var Protocol = require(__dirname+'/../protocols/'+protocol);
@@ -12,7 +12,7 @@ var Device = function(protocol,language,options,logger) {
     var com=new Protocol(options,logger);
     var trans=new Translator(com,logger,function(type,data) {
         logger.log("Device notification "+type,'emiter');
-        self.emit('data',type,data);
+        self.emit('data',id,type,data);
     });
     
     com.on('data',function(data) {
@@ -21,6 +21,10 @@ var Device = function(protocol,language,options,logger) {
     
     com.on('request',function(request,response) {
         trans.request(request,response);
+    });
+    
+    com.on('connection',function(data) {
+        self.emit('connection',id,data);
     });
   
     
@@ -41,6 +45,10 @@ var Device = function(protocol,language,options,logger) {
             if (typeof(data.command)=='string') {
                 if (typeof(trans[data.command])=='function') trans[data.command](data);
             }
+        },
+        
+        initstate: function(socket,db) {
+            com.initstate(socket,db);
         }
     }
 }

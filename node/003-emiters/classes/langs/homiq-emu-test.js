@@ -79,6 +79,7 @@ module.exports = function(com,logger,callback) {
                 
             } else if (data.substr(0,2)=='#I') {
                 var adr=data.substr(2,1);
+                logger.log('Signal from input '+adr,'emu');
                 callback('input',{address: adr});
                 
             } else {

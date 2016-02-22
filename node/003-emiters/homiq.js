@@ -13,7 +13,7 @@ var scenario = new Scenario(logger);
 var logic = new Logic(scenario,logger);
 
 var structureData;
-var devices={};
+var devices=[];
 
 /*
  * overall init may be initiated by signal HUP
@@ -34,14 +34,21 @@ process.on('SIGHUP',function () {
                 devices[id].disconnect();
             }
             logger.log('Initializing '+structureData.devices[i].name,'init');
-            devices[id] = new Device(structureData.devices[i].protocol,structureData.devices[i].language,structureData.devices[i].com,logger);
-            devices[id].connect();
-            devices[id].on('data',function(type,data) {
+            devices[id] = new Device(id,structureData.devices[i].protocol,structureData.devices[i].language,structureData.devices[i].com,logger);
+            
+            devices[id].on('data',function(id,type,data) {
                 logic.action(id,type,data);
             });
-            scenario.on(id,function(d) {
-                devices[id].command(d);
+            
+            devices[id].on('connection',function(id,data) {
+                devices[id].initstate(data,structure.db);
             });
+            
+            scenario.on(id,function(id,data) {
+                devices[id].command(data);
+            });
+            
+            devices[id].connect();
         }
     }   
 });

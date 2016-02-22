@@ -32,7 +32,9 @@ var Scenario=function(logger) {
                     logger.log(scenariosQueue[i].scenario.name,'scenario');
                     for(var j=0;j<scenariosQueue[i].scenario.actions.length;j++) {
                         
-                        self.emit(scenariosQueue[i].scenario.actions[j].device,scenariosQueue[i].scenario.actions[j]);
+                        self.emit(scenariosQueue[i].scenario.actions[j].device,
+                                  scenariosQueue[i].scenario.actions[j].device,
+                                  scenariosQueue[i].scenario.actions[j]);
                     }
                 }
                 
