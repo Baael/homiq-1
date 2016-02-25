@@ -23,4 +23,4 @@
 @reboot /home/homiq/start-homiq.sh
 3,9,16	*	*	*	*	sudo /usr/bin/rdate -s ntp.task.gda.pl
 30	3	*	*	*	/home/homiq/dump.sh
-0	7	*	*	1,2,3,4,5,6 wget http://gold.webkameleon.com/startmebaby
+0	7	*	*	1,2,3,4,5,6 wget -O /dev/null http://gold.webkameleon.com/startmebaby >/dev/null 2>/dev/null
