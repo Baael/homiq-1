@@ -3,6 +3,7 @@ var EventEmitter = require('events').EventEmitter;
 var http = require('http');
 var io = require('socket.io');
 var os = require('os');
+var exec = require('child_process').exec;
 
 var Httpd = function(options,logger) {
     var self=this;
@@ -11,6 +12,7 @@ var Httpd = function(options,logger) {
     var listener;
     var httpClients=[];
     var ips=[];
+    var tunnel_pid=0;
     
     var ifaces = os.networkInterfaces();
     
@@ -26,6 +28,27 @@ var Httpd = function(options,logger) {
       });
     });
     
+    var tunnel = function (userhost,localport,remoteport) {
+        
+        var milliseconds = (new Date).getTime();
+        
+        var cmd='ssh -nNT -R '+remoteport+':localhost:'+localport+' '+userhost;
+        logger.log('Trying to establish ssh tunnel: '+cmd,'net');
+        
+        var e=exec(cmd,function (error, stdout, stderr) {
+            
+            var delay=(new Date).getTime() - milliseconds;
+            var startInSeconds=delay<10000?300:1;
+            
+            setTimeout(function(){
+                tunnel(userhost,localport,remoteport);
+            },1000*startInSeconds);
+            
+            logger.log('stderr: '+stderr.trim(),'net');
+        
+        });
+        tunnel_pid=e.pid;
+    }
     
 
     return {
@@ -35,6 +58,10 @@ var Httpd = function(options,logger) {
             });
             httpServer.listen(options.port);
             logger.log('Listening on http://localhost:'+options.port,'net');
+            
+            if (typeof(options.tunnel_port)!='undefined' && typeof(options.tunnel_host)!='undefined') {
+                tunnel(options.tunnel_host,options.port,options.tunnel_port);
+            }
             
             listener = io.listen(httpServer);
             
