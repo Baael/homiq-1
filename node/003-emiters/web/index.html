@@ -1,4 +1,4 @@
-<html>
+<html ng-app>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
@@ -6,6 +6,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <script src="/socket.io/socket.io.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+
     <style>
       .row {
         padding-top: 10px;
@@ -36,10 +38,30 @@
     <script>
         var socket = io.connect();
 
-        socket.on('output', function(data){
-            if (data.logicalstate=='on') $('.L'+data.address).addClass('light');
-            else $('.L'+data.address).removeClass('light');
-        });
+        function PudelController($scope) {
+          $scope.points = ['','','','','','','','','',''];
+        
+          $scope.switch = function (index){
+            index=(index+1)%10;
+            
+            socket.emit('input', index);
+          }
+          socket.on('output', function(data){
+ 
+            var adr=parseInt(data.address)-1;
+            if (adr==-1) adr=9;
+          
+            if (data.logicalstate=='on') $scope.points[adr]='light';
+            else $scope.points[adr]='';
+            
+            
+            $scope.$apply();
+          });
+
+          
+          
+        }
+        
         
         socket.on('web',function(web) {
           var host=location.hostname;
@@ -56,32 +78,14 @@
           }
           
         });
-        
-        $(function() {
-            $('.row div').click(function (e){
-              socket.emit('input', $(this).text());
-            });
-
-        });
+      
     </script>
     
-    <div class="container">
-      
-      <div class="row">
-        <div class="L1 col-md-1 col-sm-3 col-xs-4">1</div>
-        <div class="L2 col-md-1 col-sm-3 col-xs-4">2</div>
-        <div class="L3 col-md-1 col-sm-3 col-xs-4">3</div>
-        <div class="L4 col-md-1 col-sm-3 col-xs-4">4</div>
-        <div class="L5 col-md-1 col-sm-3 col-xs-4">5</div>
-        <div class="L6 col-md-1 col-sm-3 col-xs-4">6</div>
-        <div class="L7 col-md-1 col-sm-3 col-xs-4">7</div>
-        <div class="L8 col-md-1 col-sm-3 col-xs-4">8</div>
-        <div class="L9 col-md-1 col-sm-3 col-xs-4">9</div>
-        <div class="L0 col-md-1 col-sm-3 col-xs-4">0</div>
-        
-      </div>
-      
-    </div>
     
+    <div ng-controller="PudelController" class="container">
+      <div class="row">
+        <div ng-repeat="point in points" ng-click="switch($index)" class="{{ point }} col-md-1 col-sm-3 col-xs-4">{{ ($index+1)%10 }}</div>
+      </div>
+    </div>
   </body>
 </html>

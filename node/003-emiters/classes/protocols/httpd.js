@@ -32,7 +32,7 @@ var Httpd = function(options,logger) {
         
         var milliseconds = (new Date).getTime();
         
-        var cmd='ssh -nNT -R '+remoteport+':localhost:'+localport+' '+userhost;
+        var cmd='ssh -nNT -o TCPKeepAlive=yes -o ServerAliveInterval=60 -R '+remoteport+':localhost:'+localport+' '+userhost;
         logger.log('Trying to establish ssh tunnel: '+cmd,'net');
         
         var e=exec(cmd,function (error, stdout, stderr) {
@@ -44,7 +44,9 @@ var Httpd = function(options,logger) {
                 tunnel(userhost,localport,remoteport);
             },1000*startInSeconds);
             
+            
             logger.log('stderr: '+stderr.trim(),'net');
+            logger.log('Waiting '+startInSeconds+'sec. for next ssh start.','net');
         
         });
         tunnel_pid=e.pid;
