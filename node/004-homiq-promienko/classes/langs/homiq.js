@@ -7,7 +7,8 @@ var pos_src=2;
 var pos_dst=3;
 var pos_pkt=4;
 var pos_top=5;
-var pos_zer=6;
+var pos_crc=6;
+
 
 
 
@@ -16,6 +17,32 @@ module.exports = function(com,logger,callback) {
     var sendQueue=[];
     var sendSemaphore=false;
     var buf='';
+    
+    var crc = function (cmd) {
+        var str=cmd[pos_cmd]+cmd[pos_val]+cmd[pos_src]+cmd[pos_dst]+cmd[pos_pkt]+cmd[pos_top];
+        var c=0;
+        for (var i=0; i<str.length; i++) {
+
+            var ord=str.charCodeAt(i);
+            var bit_counter = 8;
+            
+            while (bit_counter > 0 ) {
+                
+                var feedback_bit = (c ^ ord) & 0x01;
+                if ( feedback_bit == 0x01 ) {
+                    c = c ^ 0x18;
+                }
+                c = (c >> 1) & 0x7F;
+                if (feedback_bit == 0x01 ) {
+                    c = c | 0x80;
+                }
+                ord = ord >> 1;
+                bit_counter--;
+
+            }             
+        }
+        return c;
+    }
     
     var send = function(str,delay) {
         now=Date.now()/1000;
@@ -98,12 +125,14 @@ module.exports = function(com,logger,callback) {
                 var line=buf.substr(begin+2,end-begin-2).split(';');
                 buf=buf.substr(end+2);
                 if (line[pos_top]=='s') {
-                    line[pos_top]='a';
-                    var cmd='<;'+line.join(';')+';>';
-                    line[pos_top]='s';
+                    var ack=line.slice(0);
+                    ack[pos_top]='a';
+                    ack[pos_dst]=line[pos_src];
+                    ack[pos_src]=line[pos_dst];
+                    ack[pos_crc]=crc(ack);
+                    var cmd='<;'+ack.join(';')+';>';
                     logger.log('Sending: '+cmd,'frame');
                     com.send(cmd+"\r\n");
-                    
                 }
                 linein(line);
             }
