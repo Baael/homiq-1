@@ -19,7 +19,19 @@ var Logic = function(scenario,logger)
                 
                 case 'input': {
                     var actions=db.actions.get(data);
-                
+                    var inp=db.inputs.get(data);
+                    var now=Date.now();
+                    
+                    if (inp!=null) {    
+                        if (typeof(inp.last)=='undefined') {
+                            inp.last=0;
+                        }
+                        data.last=inp.last
+                        data.time=now-data.last;
+                        data.last=now;
+                        db.inputs.set(data);
+                    }
+                    
                     if (actions!=null) {
                         if (typeof(actions.actions)=='object') {
                             
@@ -45,8 +57,15 @@ var Logic = function(scenario,logger)
                             }
                         }
                     } else {
-                        logger.log('No action for input '+db.actions.index(data),'logic');
+                        
+                        var name='';
+                        if (inp!=null) {
+                            name=' ('+inp.name+')';
+                        }
+                        logger.log('No action for input '+db.actions.index(data)+name,'logic');
                     }
+                    
+                    
                     
                 }
             }

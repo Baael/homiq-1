@@ -9,6 +9,8 @@
     $outputs=[];
     $inputs=[];
     $ios=[];
+	$actions=[];
+	$scenarios=[];
     
     $adodb=new HDB($ini['database']['type'],$ini['database']['host'], $ini['database']['user'], $ini['database']['pass'], $ini['database']['name']);
 
@@ -64,7 +66,7 @@
             'address'=>$o_module.'.'.$o_adr,
             'parent'=>$o_module,
             'name'=>$o_name,
-            'state'=>$o_state,
+            'state'=>0,
             'timeout'=>$o_sleep,
             'type'=>$o_type,
             'active'=>$o_active
@@ -91,7 +93,81 @@
         ];
         //echo $adodb->ado_ExplodeName($res,$i);break;
     }
+
+
+	$act=[];
+    $sql="SELECT * FROM action ORDER BY a_pri,a_id";
+	$res=$adodb->execute($sql);
+    if ($res) for ($i=0;$i<$res->RecordCount();$i++)
+    {
+        parse_str($adodb->ado_ExplodeName($res,$i));
+        
+		for ($p=0;$p<16;$p++) {
+			if (pow(2,$p)==$a_input_adr) {
+				$idx=$a_input_module.'.'.$p;
+				
+				$cond=[];
+				$s='A-'.$a_id;
+				
+				if (strlen($a_input_module_state)) {
+					if ($a_input_module_state=='0' || $a_input_module_state=='1') {
+						$c=['logicalstate','=',$a_input_module_state?'on':'off'];
+					} else {
+						$c=['state','=',$a_input_module_state];
+					}
+					$cond[]=[
+						'db'=>'outputs',
+						'device'=>'HQP',
+						'address'=>$a_output_module.'.'.$a_output_adr,
+						'condition'=> $c
+					];
+				}
+				if (strlen($a_input_state)) {
+					$cond[]=[
+						'db'=>'inputs',
+						'device'=>'HQP',
+						'address'=>$a_input_module.'.'.$p,
+						'condition'=> [
+							'state','=',$a_input_state
+						]
+					];
+				}
+
+				$scenarios[]=[
+					'id'=>$s,
+					'name'=>$a_name,
+					'conditions'=>[],
+					'actions'=> [
+						'device'=>'HQP',
+						'address'=>$a_output_module.'.'.$a_output_adr,
+						'command'=>$a_output_state?'turnon':'turnoff'
+					]
+				];
+				
+				$a=['conditions'=>$cond,'scenarios'=>[['scenario'=>$s]]];
+				
+				if (strlen($a_macro)) $a['scenarios'][]=['scenario'=>$a_macro];
+				
+				if (!isset($act[$idx])) $act[$idx]=['device'=>'HQP','address'=>$idx,'actions'=>[]];
+				$act[$idx]['actions'][]=$a;
+			}
+		}
+		
+   
+		
+		
+        //if (1|| $a_id==388) {print_r(explode('&',$adodb->ado_ExplodeName($res,$i)));break;}
+    }
+
+	foreach ($act AS $a) $actions[]=$a;
+
+	die(print_r(['a'=>$actions,'s'=>$scenarios],1));
+
     
     
+	file_put_contents(__DIR__.'/conf/inputs.json', json_encode($inputs));
+	file_put_contents(__DIR__.'/conf/outputs.json', json_encode($outputs));
+	file_put_contents(__DIR__.'/conf/ios.json', json_encode($ios));
+	
     
-    print_r([$ios,$outputs,$inputs]);
+    //print_r([$ios,$outputs,$inputs]);

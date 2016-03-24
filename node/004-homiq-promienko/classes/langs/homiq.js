@@ -1,5 +1,5 @@
 var attempts=5;
-var attempt_delay=3;
+var attempt_delay=1;
 
 var pos_cmd=0;
 var pos_val=1;
@@ -17,6 +17,8 @@ module.exports = function(com,logger,callback) {
     var sendQueue=[];
     var sendSemaphore=false;
     var buf='';
+    var self=this;
+
     
     var crc = function (cmd) {
         var str=cmd[pos_cmd]+cmd[pos_val]+cmd[pos_src]+cmd[pos_dst]+cmd[pos_pkt]+cmd[pos_top];
@@ -98,7 +100,16 @@ module.exports = function(com,logger,callback) {
     }
     
     var linein = function (line) {
+        var cmd=line[pos_cmd].split('.');
         
+        if (typeof(self['cmd_'+cmd[0]])=='function') {
+            self['cmd_'+cmd[0]](line);
+        }
+    }
+    
+    self.cmd_I = function (line) {
+        var cmd=line[pos_cmd].split('.');
+        if (cmd.length==2) callback('input',{address: line[pos_src]+'.'+cmd[1], value: line[pos_val]});
     }
     
     
@@ -131,7 +142,7 @@ module.exports = function(com,logger,callback) {
                     ack[pos_src]=line[pos_dst];
                     ack[pos_crc]=crc(ack);
                     var cmd='<;'+ack.join(';')+';>';
-                    logger.log('Sending: '+cmd,'frame');
+                    logger.log('Sending ack: '+cmd,'frame');
                     com.send(cmd+"\r\n");
                 }
                 linein(line);
