@@ -30,6 +30,8 @@ var Scenario=function(logger) {
                 
                 if (pass) {
                     logger.log(scenariosQueue[i].scenario.name,'scenario');
+                    
+
                     for(var j=0;j<scenariosQueue[i].scenario.actions.length;j++) {
                         
                         self.emit(scenariosQueue[i].scenario.actions[j].device,
@@ -66,7 +68,12 @@ var Scenario=function(logger) {
          *get database for specified scenario id
          */
         scenario=db.scenarios.get(scenario);
-        if (typeof(scenario)!='object') return;
+        if (scenario==null) return;
+        
+        var typeofactive=typeof(scenario['active']);
+        if (typeofactive=='string') if (scenario.active=='0') return;
+        if (typeofactive=='boolean') if (scenario.active==false) return;
+        if (typeofactive=='integer') if (scenario.active==0) return;
         
         /*
          *queue scenario

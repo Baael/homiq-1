@@ -18,19 +18,25 @@ var Logic = function(scenario,logger)
                     break;
                 
                 case 'input': {
-                    var actions=db.actions.get(data);
                     var inp=db.inputs.get(data);
+                    if (inp==null) break;
+                    var typeofactive=typeof(inp['active']);
+                    if (typeofactive=='string') if (inp.active=='0') break;
+                    if (typeofactive=='boolean') if (inp.active==false) break;
+                    if (typeofactive=='integer') if (inp.active==0) break;
+                    
+                    var actions=db.actions.get(data);
+                    
                     var now=Date.now();
                     
-                    if (inp!=null) {    
-                        if (typeof(inp.last)=='undefined') {
-                            inp.last=0;
-                        }
-                        data.last=inp.last
-                        data.time=now-data.last;
-                        data.last=now;
-                        db.inputs.set(data);
+                    if (typeof(inp.last)=='undefined') {
+                        inp.last=0;
                     }
+                    data.last=inp.last
+                    data.time=now-data.last;
+                    data.last=now;
+                    db.inputs.set(data);
+                
                     
                     if (actions!=null) {
                         if (typeof(actions.actions)=='object') {
