@@ -49,7 +49,6 @@ module.exports = function(com,logger,callback) {
     var send = function(cmd,delay) {
         now=Date.now()/1000;
         
-        if (needack==null) needack=false;
         
         if (cmd!=null) {
             var arr=new Array;
@@ -128,18 +127,24 @@ module.exports = function(com,logger,callback) {
     
     return {
         'turnon': function(options) {
-            //var cmd='#S'+options['address']+'.1';
+            var adr=options['address'].split('.');
             var delay = typeof(options['delay'])=='undefined'?0:options['delay'];
-            //send(cmd,delay);
+            send({
+                cmd: 'O.'+adr[1],
+                dst: adr[0],
+                val: 1
+            },delay);
             
-            console.log(options);
+            
         },
         'turnoff': function(options) {
-            //var cmd='#S'+options['address']+'.0';
+            var adr=options['address'].split('.');
             var delay = typeof(options['delay'])=='undefined'?0:options['delay'];
-            //send(cmd,delay);
-            
-            console.log(options);
+            send({
+                cmd: 'O.'+adr[1],
+                dst: adr[0],
+                val: 0
+            },delay);
         },
         'data': function(data) {
             buf+=data.trim();
